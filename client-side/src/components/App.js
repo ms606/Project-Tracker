@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import "../styles/App.scss";
+import "../styles/displayTable.scss";
 import StatusLine from "./StatusLine";
+import StatusLineDetail from "./StatusLineDetail";
 import {
   BrowserRouter as Router,
   Switch, 
   Route,
   Link
 } from "react-router-dom";
-
-
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -98,23 +98,26 @@ function App() {
 
   // To change displays
   function Display(tasks){
-    
+
+    console.log(tasks.tasks[0])
+
     return(
-      <div>
+      <div id="notif">
         <h2>View Everything</h2>
         <div>
-           {tasks.tasks.map((task) => (
-            <div key={task.id}> 
-              <p>{task.orderCode}</p>
-              <p>{task.title}</p>
-              <p>{task.urgency}</p>
-              <p>{task.machineDet}</p>
-              <p>{task.expectedShipping}</p>
-              <p>{task.shipping}</p>
-            </div> 
-          )) }
- 
+         {tasks.tasks.map((task) => (
+           <tr key={task.id}> 
+            <td>{task.orderCode}</td>
+            <td>{task.title}</td>
+            <td>{task.urgency}</td>
+            <td>{task.machineDet}</td>
+            <td>{task.expectedShipping}</td>
+            <td>{task.shipping}</td>
+           </tr>               
+          ))}                             
         </div>
+
+   
       </div>
     )
   }
@@ -129,25 +132,21 @@ function App() {
             addEmptyTask={addEmptyTask}
             addTask={addTask}
             deleteTask={deleteTask}
-            moveTask={moveTask}
             status="Create Task"
           />
-          <StatusLine
+        </section>
+        <StatusLineDetail
             tasks={tasks}
             addEmptyTask={addEmptyTask}
             addTask={addTask}
             deleteTask={deleteTask}
             moveTask={moveTask}
-            status="Detail"
-          />
-         
-        </section>
+            status="Create Task Activites"
+          />         
+   
       </main>
 
-
-
-    
-
+      
 <Router>
 <div>
   <ul>

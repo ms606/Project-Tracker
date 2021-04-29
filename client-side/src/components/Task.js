@@ -2,7 +2,7 @@ import "../styles/task.scss";
 import { useState } from "react";
 
 export default function Task(props) {
-  const { addTask, deleteTask, moveTask, task } = props;
+  const { addTask, deleteTask, task } = props;
 
   const [urgencyLevel, setUrgencyLevel] = useState(task.urgency);
   const [collapsed, setCollapsed] = useState(task.isCollapsed);
@@ -42,34 +42,6 @@ export default function Task(props) {
 
     if (formAction === "delete") {
       deleteTask(task.id);
-    }
-  }
-
-  function handleMoveLeft() {
-    let newStatus = "";
-
-    if (task.status === "In Progress") {
-      newStatus = "Backlog";
-    } else if (task.status === "Done") {
-      newStatus = "In Progress";
-    }
-
-    if (newStatus !== "") {
-      moveTask(task.id, newStatus);
-    }
-  }
-
-  function handleMoveRight() {
-    let newStatus = "";
-
-    if (task.status === "Backlog") {
-      newStatus = "In Progress";
-    } else if (task.status === "In Progress") {
-      newStatus = "Done";
-    }
-
-    if (newStatus !== "") {
-      moveTask(task.id, newStatus);
     }
   }
 
@@ -189,3 +161,4 @@ export default function Task(props) {
     </div>
   );
 }
+
