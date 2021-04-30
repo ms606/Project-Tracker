@@ -57,6 +57,7 @@ export default function Task(props) {
           disabled={collapsed}
           defaultValue={task.title}
         />
+        <br />
         <input
           type="text"
           className="title input"

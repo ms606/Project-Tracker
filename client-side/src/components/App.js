@@ -64,24 +64,6 @@ function App() {
     saveTasksToLocalStorage(filteredTasks);
   }
 
-  function moveTask(id, newStatus) {
-    let task = tasks.filter((task) => {
-      return task.id === id;
-    })[0];
-
-    let filteredTasks = tasks.filter((task) => {
-      return task.id !== id;
-    });
-
-    task.status = newStatus;
-
-    let newTaskList = [...filteredTasks, task];
-
-    setTasks(newTaskList);
-
-    saveTasksToLocalStorage(newTaskList);
-  }
-
   function saveTasksToLocalStorage(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
@@ -135,12 +117,12 @@ function App() {
             status="Create Task"
           />
         </section>
+
         <StatusLineDetail
             tasks={tasks}
             addEmptyTask={addEmptyTask}
             addTask={addTask}
             deleteTask={deleteTask}
-            moveTask={moveTask}
             status="Create Task Activites"
           />         
    

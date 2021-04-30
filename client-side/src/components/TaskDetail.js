@@ -14,18 +14,18 @@ export default function TaskDetail (props) {
         if (collapsed) {
           setCollapsed(false);
         } else {
-          let newTaskDetail = {
-            id: task.id,
-            orderCode: event.target.elements.orderCode.value,
+        
+        let newTaskDetail = {
+           id: task.id,
+           // orderCode: event.target.elements.orderCode.value,
             resource: event.target.elements.resource.value,
             NoOfResource : event.target.elements.NoOfResource.value,
-            hour: event.target.elements.description.value,
+            hour: event.target.elements.hour.value,
             duration: event.target.elements.duration.value,
             department: event.target.elements.department.value
-          };
-  
-  
-          console.log(event);
+        };
+    
+          console.log('lala',event);
   
           addTask(newTaskDetail);
           setCollapsed(true);
@@ -43,7 +43,7 @@ export default function TaskDetail (props) {
         <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
           <input
             type="text"
-            className="title input"
+            //className="title input"
             name="resource"
             placeholder="Enter Resource."
             disabled={collapsed}
@@ -52,7 +52,7 @@ export default function TaskDetail (props) {
 
           <input
             type="text"
-            className="title input"
+            //className="title input"
             name="NoOfResource"
             placeholder="Number Of Resource "
             disabled={collapsed}
@@ -61,7 +61,7 @@ export default function TaskDetail (props) {
 
           <input
             type="text"
-            className="title input"
+           // className="title input"
             name="hour"
             placeholder="Enter Hour"
             disabled={collapsed}
@@ -70,11 +70,20 @@ export default function TaskDetail (props) {
           
           <input
             type="number"
-            className="title input"
+           // className="title input"
             name="duration"
             placeholder="Enter Duration"
             disabled={collapsed}
             defaultValue={task.duration}
+          />
+
+          <input
+            type="text"
+           // className="title input"
+            name="department"
+            placeholder="Enter Department"
+            disabled={collapsed}
+            defaultValue={task.department}
           />
 
           <button
