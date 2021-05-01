@@ -2,28 +2,37 @@ import "../styles/statusLine.scss";
 import Task from "./TaskDetail";
 
 export default function StatusLine(props) {
-  const { status, tasks, addTask, deleteTask, addEmptyTask } = props;
+  const { status, taskDetail, addTaskDetail, deleteTask, addEmptyTask } = props;
 
   let taskList, tasksForStatus;
+  
+  console.log('status',status);
 
   function handleAddEmpty() {
     addEmptyTask(status);
   }
 
-  if (tasks) {
-    tasksForStatus = tasks.filter((task) => {
-      return task.status === status;
+  if (taskDetail) {
+    tasksForStatus = taskDetail.filter((task) => {
+    return task.status === status;
     });
   }
 
+
+  console.log('tasksForStatus',tasksForStatus);
+  
   if (tasksForStatus) {
     taskList = tasksForStatus.map((task) => {
+
+      //console.log('Loop understanding here..', task)  ;
+      //console.log('Loop understanding here.. 1', (id))  ;
+      //console.log('Loop understanding here.. 2', task.id)  ;
       return (
         <Task
-          addTask={(task) => addTask(task)}
-          deleteTask={(id) => deleteTask(id)}
-          key={task.id}
-          task={task}
+          addTaskDetail   = {(task) => addTaskDetail(task)}
+          deleteTaskDetail= {(id) => deleteTask(id)}
+          key             = {task.id}
+          taskDetail      = {task}
         />
       );
     });

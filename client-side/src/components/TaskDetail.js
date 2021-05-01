@@ -1,11 +1,15 @@
 import { useState } from "react";
 
 export default function TaskDetail (props) {
-    const { addTask, deleteTask, task } = props;
+    const { addTaskDetail, deleteTaskDetail, taskDetail } = props;
+    
+    //console.log('Add task detail collapsed', taskDetail);
+    console.log('Delete task detail logging',deleteTaskDetail);
 
-    const [collapsed, setCollapsed] = useState(task.isCollapsed);
+    const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
     const [formAction, setFormAction] = useState("");
-  
+    
+    console.log('Add task', taskDetail.isCollapsed);
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -16,29 +20,30 @@ export default function TaskDetail (props) {
         } else {
         
         let newTaskDetail = {
-           id: task.id,
+           id: taskDetail.id,
            // orderCode: event.target.elements.orderCode.value,
+            isCollapsed: true,
+            status: taskDetail.status,
             resource: event.target.elements.resource.value,
-            NoOfResource : event.target.elements.NoOfResource.value,
+            NoOfResource: event.target.elements.NoOfResource.value,
             hour: event.target.elements.hour.value,
             duration: event.target.elements.duration.value,
             department: event.target.elements.department.value
         };
     
-          console.log('lala',event);
-  
-          addTask(newTaskDetail);
-          setCollapsed(true);
+        addTaskDetail(newTaskDetail);
+        setCollapsed(true);
         }
       }
   
       if (formAction === "delete") {
-        deleteTask(task.id);
+        deleteTaskDetail(taskDetail.id);
       }
     }
   
     return (
-      <div className={`task ${collapsed ? "collapsedTask" : ""}`}>
+      <div >
+        {/* //className={`task ${collapsed ? "collapsedTask" : ""}`}> */}
     
         <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
           <input
@@ -47,7 +52,7 @@ export default function TaskDetail (props) {
             name="resource"
             placeholder="Enter Resource."
             disabled={collapsed}
-            defaultValue={task.resource}
+            defaultValue={taskDetail.resource}
           />
 
           <input
@@ -56,7 +61,7 @@ export default function TaskDetail (props) {
             name="NoOfResource"
             placeholder="Number Of Resource "
             disabled={collapsed}
-            defaultValue={task.NoOfResource}
+            defaultValue={taskDetail.NoOfResource}
           />
 
           <input
@@ -65,7 +70,7 @@ export default function TaskDetail (props) {
             name="hour"
             placeholder="Enter Hour"
             disabled={collapsed}
-            defaultValue={task.hour}
+            defaultValue={taskDetail.hour}
           />
           
           <input
@@ -74,7 +79,7 @@ export default function TaskDetail (props) {
             name="duration"
             placeholder="Enter Duration"
             disabled={collapsed}
-            defaultValue={task.duration}
+            defaultValue={taskDetail.duration}
           />
 
           <input
@@ -83,7 +88,7 @@ export default function TaskDetail (props) {
             name="department"
             placeholder="Enter Department"
             disabled={collapsed}
-            defaultValue={task.department}
+            defaultValue={taskDetail.department}
           />
 
           <button

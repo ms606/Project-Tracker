@@ -6,6 +6,8 @@ export default function StatusLine(props) {
 
   let taskList, tasksForStatus;
 
+  //console.log('status', status);
+
   function handleAddEmpty() {
     addEmptyTask(status);
   }
@@ -15,6 +17,8 @@ export default function StatusLine(props) {
       return task.status === status;
     });
   }
+
+  console.log('tasksForStatus 1',tasksForStatus);
 
   if (tasksForStatus) {
     taskList = tasksForStatus.map((task) => {

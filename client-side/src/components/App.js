@@ -12,6 +12,7 @@ import {
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [taskDetail, setTaskDetail] = useState([]);
 
   useEffect(() => {
     loadTasksFromLocalStorage();
@@ -42,7 +43,7 @@ function App() {
     ]);
   }
 
-  function addTask(taskToAdd) {
+  function addTask(taskToAdd) {  
     let filteredTasks = tasks.filter((task) => {
       return task.id !== taskToAdd.id;
     });
@@ -78,6 +79,7 @@ function App() {
     }
   }
 
+
   // To change displays
   function Display(tasks){
 
@@ -98,12 +100,64 @@ function App() {
            </tr>               
           ))}                             
         </div>
-
-   
       </div>
     )
   }
 
+
+
+
+
+
+  // Function for adding task details 
+  function addEmptyTaskDetail(status) {
+    const lastTask = taskDetail[taskDetail.length - 1];
+
+    let newTaskId = 1;
+
+    if (lastTask !== undefined) {
+      newTaskId = lastTask.id + 1;
+    }
+
+   
+
+    setTaskDetail((taskDetail) => [
+      ...taskDetail,
+      {
+        id: newTaskId,
+        NoOfResource: "",
+        hour: "",
+        duration: "",
+        department: "",
+        status: status 
+      },
+    ])
+    
+    //console.log('here is reached', setTaskDetail);
+
+  }
+
+
+  // Function for second table 
+  function addTaskDetail(taskToAdd) {  
+    let filteredTasks = tasks.filter((task) => {
+      return task.id !== taskToAdd.id;
+    });
+
+    let newTaskList = [...filteredTasks, taskToAdd];
+
+    setTaskDetail(newTaskList);
+
+    saveTaskDetailToLocalStorage(newTaskList);
+  }
+
+  // Function for storing task detail
+  
+  function saveTaskDetailToLocalStorage(tasks) {
+    localStorage.setItem("taskDetail", JSON.stringify(tasks));
+  }
+
+  console.log('step 1', taskDetail)
   return (
     <div className="App">
       <h1>Project Activities</h1>
@@ -119,9 +173,9 @@ function App() {
         </section>
 
         <StatusLineDetail
-            tasks={tasks}
-            addEmptyTask={addEmptyTask}
-            addTask={addTask}
+            taskDetail={taskDetail}
+            addEmptyTask={addEmptyTaskDetail}
+            addTaskDetail={addTaskDetail}
             deleteTask={deleteTask}
             status="Create Task Activites"
           />         

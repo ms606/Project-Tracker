@@ -5,8 +5,8 @@ export default function Task(props) {
   const { addTask, deleteTask, task } = props;
 
   const [urgencyLevel, setUrgencyLevel] = useState(task.urgency);
-  const [collapsed, setCollapsed] = useState(task.isCollapsed);
-  const [formAction, setFormAction] = useState("");
+  const [collapsed,    setCollapsed   ] = useState(task.isCollapsed);
+  const [formAction,   setFormAction  ] = useState("");
 
   function setUrgency(event) {
     setUrgencyLevel(event.target.attributes.urgency.value);
@@ -57,7 +57,6 @@ export default function Task(props) {
           disabled={collapsed}
           defaultValue={task.title}
         />
-        <br />
         <input
           type="text"
           className="title input"
