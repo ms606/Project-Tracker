@@ -30,7 +30,7 @@ exports.create_a_task = function(req, res) {
   var new_task = new Task(req.body);
 
   //handles null error 
-   if(!new_task.task || !new_task.status){
+   if(!new_task.activity || !new_task.status){
 
             res.status(400).send({ error:true, message: 'Please provide task/status' });
 
@@ -47,7 +47,7 @@ else{
 };
 
 exports.create_a_task_details = function(req, res) {
-  var new_task = new Task(req.body);
+  var new_task = new NewTask(req.body);
   new_task.orderCode = req.params.taskId;
 
   //handles null error 
@@ -77,6 +77,14 @@ exports.read_a_task = function(req, res) {
 
 exports.read_a_task_detail = function(req, res) {
   NewTask.getTaskDetailById(req.params.taskId, function(err, task) {
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+};
+
+exports.task_everything = function(req, res) {
+  NewTask.getTaskEverythingById(req.params.taskId, function(err, task) {
     if (err)
       res.send(err);
     res.json(task);

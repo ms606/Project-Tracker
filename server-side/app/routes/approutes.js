@@ -19,4 +19,7 @@ module.exports = function(app) {
 
   app.route('/taskDetailTask/:taskId')  
     .get(todoList.read_a_task_detail)  
-    };
+
+  app.route('/taskEverything/:taskId')  
+    .get(todoList.task_everything)  
+    };    
