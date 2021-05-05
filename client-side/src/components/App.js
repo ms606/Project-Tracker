@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import "../styles/App.scss";
 import "../styles/displayTable.scss";
@@ -379,48 +380,99 @@ function Home(){
 
 
  // To change displays
- function Display(){
+ class Display extends React.Component{
 
-  let match = useRouteMatch();
-  console.log(match);
+  //let match = useRouteMatch();
+  //console.log(match);
 
-  let loadedTasks = localStorage.getItem("tasks");
+  // let loadedTasks = localStorage.getItem("tasks");
 
-  let tasks = JSON.parse(loadedTasks);
+  // let tasks = JSON.parse(loadedTasks);
   
-  console.log('Display tasks checking', tasks);
+  // console.log('Display tasks checking', tasks);
 
-  //console.log(tasks.tasks[0])
+  // //console.log(tasks.tasks[0])
 
-  return(
-    <div id="notif">
-      <h2>View Everything</h2>
-      <div>
-       <table>
+  // return(
+  //   <div id="notif">
+  //     <h2>View Everything</h2>
+  //     <div>
+  //      <table>
+  //           <thead>
+  //             <th>Order Code</th>
+  //             <th>Title</th>
+  //             <th>Urgency</th>
+  //             <th>Machine Detail</th>
+  //             <th>Expected Shipping</th>
+  //             <th>Shipping</th>              
+  //           </thead>
+  //           <tbody>
+  //           {tasks.map((task) => (
+  //             <tr key={task.id}> 
+  //               <td>{task.orderCode}</td>
+  //               <td>{task.title}</td>
+  //               <td>{task.urgency}</td>
+  //               <td>{task.machineDet}</td>
+  //               <td>{task.expectedShipping}</td>
+  //               <td>{task.shipping}</td>
+  //             </tr>               
+  //             ))}                             
+  //           </tbody>  
+  //       </table> 
+  //     </div>
+  //   </div>
+  // )
+
+
+  constructor(props) {
+      super(props);
+      this.state = { apiResponse: [] };
+    }
+  
+
+    async componentDidMount() {
+      const response = await fetch("http://localhost:3000/tasks");
+      const json = await response.json();
+      this.setState({ apiResponse: json });
+    }
+
+    render() {
+      
+      const Arr = [];
+
+      Arr.push(this.state.apiResponse);
+      
+      return (
+            <div>
+            <table>
             <thead>
               <th>Order Code</th>
-              <th>Title</th>
+              <th>Activity</th>
               <th>Urgency</th>
               <th>Machine Detail</th>
               <th>Expected Shipping</th>
               <th>Shipping</th>              
             </thead>
             <tbody>
-            {tasks.map((task) => (
-              <tr key={task.id}> 
-                <td>{task.orderCode}</td>
-                <td>{task.title}</td>
-                <td>{task.urgency}</td>
-                <td>{task.machineDet}</td>
-                <td>{task.expectedShipping}</td>
-                <td>{task.shipping}</td>
-              </tr>               
-              ))}                             
-            </tbody>  
-        </table> 
-      </div>
-    </div>
-  )
+
+               {Arr[0].map((task) => 
+                 <tr key={task.id}>  
+                    <td>{task.orderCode}</td>
+                    <td>{task.Activity}</td>
+                    <td>{task.urgency}</td>
+                    <td>{task.machineDet}</td>
+                    <td>{task.expectedShipping}</td>
+                    <td>{task.shipping}</td>
+                 </tr>                   
+               )}
+               </tbody>  
+            </table> 
+            </div>
+      )
+    }
+
+
+
 }
 
 
