@@ -3,8 +3,8 @@
 .task {
   padding: 1rem;
   margin-bottom: 0.5rem;
-  display: flex;
-  align-items: flex-end;
+  // display: flex;
+  // align-items: flex-end;
   border: 1px solid $white;
   border-radius: 0.25rem;
 
@@ -17,8 +17,8 @@
   }
 
   form {
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
     text-align: center;
     align-items: center;
     margin: 0 0.25rem;
@@ -30,7 +30,7 @@
       color: $white;
       text-align: center;
       resize: none;
-      display: flex;
+      //display: flex;
       font-family: "Kanit", sans-serif;
 
       &:hover {
@@ -73,7 +73,7 @@
 
     .urgencyLabels {
       margin-bottom: 1.5rem;
-      display: flex;
+      //display: flex;
       flex-direction: row;
 
       label {

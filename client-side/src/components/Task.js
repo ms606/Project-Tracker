@@ -36,7 +36,7 @@ export default function Task(props) {
         console.log(event);
 
         addTask(newTask);
-        setCollapsed(true);
+        // setCollapsed(true);
       }
     }
 
@@ -46,41 +46,49 @@ export default function Task(props) {
   }
 
   return (
-    <div className={`task ${collapsed ? "collapsedTask" : ""}`}>
-  
+    <div className="task">
+      {/* <div className={`task ${collapsed ? "collapsedTask" : ""}`}> */}
       <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
+        
+        <label>Order Code</label>
         <input
           type="text"
-          className="title input"
+          //className="title input"
           name="orderCode"
           placeholder="Enter Order Code "
           disabled={collapsed}
           defaultValue={task.title}
         />
+        <br />
+        <label>Enter Machine Detail</label>
         <input
           type="text"
-          className="title input"
+          //className="title input"
           name="machineDet"
           placeholder="Enter Machine Detail "
           disabled={collapsed}
           defaultValue={task.machineDet}
         />
+        <br />
+        <label>Enter Title</label>
         <input
           type="text"
-          className="title input"
+          //className="title input"
           name="title"
           placeholder="Enter Title"
           disabled={collapsed}
           defaultValue={task.title}
         />
+        <br />
+        <label>Enter Activity</label>
         <textarea
           rows="2"
-          className="description input"
+          //className="description input"
           name="description"
           placeholder="Enter Activity"
           defaultValue={task.description}
         />
-        
+        <br />
         <label className="title input">Select Expected Shipping</label>
         <input
           type="date"
@@ -88,8 +96,7 @@ export default function Task(props) {
           name="expectedShipping"
           placeholder="Select Expected Shipping"
           disabled={collapsed}
-          defaultValue={task.expectedShipping}
-          
+          defaultValue={task.expectedShipping}          
         />
 
         <br />
