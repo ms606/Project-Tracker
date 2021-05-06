@@ -17,17 +17,17 @@
   }
 
   form {
-    // display: flex;
-    // flex-direction: column;
+     display: flex;
+     flex-direction: column;
     text-align: center;
     align-items: center;
     margin: 0 0.25rem;
 
     .input {
-      background-color: transparent;
+      background-color: white;
       border: 1px solid transparent;
       border-radius: 0.25rem;
-      color: $white;
+      color: $black;
       text-align: center;
       resize: none;
       //display: flex;
@@ -41,11 +41,11 @@
       &:focus {
         outline: none;
         border-color: $gold;
-        color: $gold;
+        color: $black;
       }
 
       &::placeholder {
-        color: $white;
+        color: $black;
       }
     }
 
@@ -138,8 +138,8 @@
     }
 
     &.collapsed {
-      flex-direction: row;
-      align-content: center;
+      // flex-direction: row;
+     // align-content: center;
 
       .title {
         margin: 0;

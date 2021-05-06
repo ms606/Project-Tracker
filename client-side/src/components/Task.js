@@ -23,8 +23,8 @@ export default function Task(props) {
           id: task.id,
           orderCode: event.target.elements.orderCode.value,
           machineDet: event.target.elements.machineDet.value,
-          title: event.target.elements.title.value,
-          description: event.target.elements.description.value,
+          activity: event.target.elements.activity.value,
+          customer: event.target.elements.customer.value,
           urgency: urgencyLevel,
           status: task.status,
           isCollapsed: true,
@@ -33,10 +33,10 @@ export default function Task(props) {
         };
 
 
-        console.log(event);
+        //console.log(event);
 
         addTask(newTask);
-        // setCollapsed(true);
+          setCollapsed(true);
       }
     }
 
@@ -48,12 +48,12 @@ export default function Task(props) {
   return (
     <div className="task">
       {/* <div className={`task ${collapsed ? "collapsedTask" : ""}`}> */}
-      <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
-        
+      <form onSubmit={handleSubmit} >
+      {/* <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}> */}
         <label>Order Code</label>
         <input
           type="text"
-          //className="title input"
+          className="title input"
           name="orderCode"
           placeholder="Enter Order Code "
           disabled={collapsed}
@@ -63,36 +63,36 @@ export default function Task(props) {
         <label>Enter Machine Detail</label>
         <input
           type="text"
-          //className="title input"
+          className="title input"
           name="machineDet"
           placeholder="Enter Machine Detail "
           disabled={collapsed}
           defaultValue={task.machineDet}
         />
         <br />
-        <label>Enter Title</label>
+        <label>Enter Activity</label>
         <input
           type="text"
-          //className="title input"
-          name="title"
-          placeholder="Enter Title"
+          className="title input"
+          name="activity"
+          placeholder="Enter Activity"
           disabled={collapsed}
-          defaultValue={task.title}
+          defaultValue={task.activity}
         />
         <br />
-        <label>Enter Activity</label>
+        <label>Enter Customer</label>
         <textarea
           rows="2"
-          //className="description input"
-          name="description"
-          placeholder="Enter Activity"
-          defaultValue={task.description}
+          className="description input"
+          name="customer"
+          placeholder="Enter Customer"
+          defaultValue={task.customer}
         />
         <br />
-        <label className="title input">Select Expected Shipping</label>
+        <label>Select Expected Shipping</label>
         <input
           type="date"
-         // className="title input"
+          className="title input"
           name="expectedShipping"
           placeholder="Select Expected Shipping"
           disabled={collapsed}
@@ -100,10 +100,10 @@ export default function Task(props) {
         />
 
         <br />
-        <label className="title input">Shipping</label>
+        <label>Shipping</label>
         <input
           type="date"
-         // className="title input"
+          className="title input"
           name="shipping"
           placeholder="Shipping"
           disabled={collapsed}

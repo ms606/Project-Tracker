@@ -71,7 +71,6 @@ class ApiComponent extends React.Component {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApiComponent />,
     <App />
   </React.StrictMode>,
    document.getElementById("root")

@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 export default function TaskDetail (props) {
-    const { addTaskDetail, deleteTaskDetail, taskDetail } = props;
+    const { addTaskDetail, deleteTaskDetail, taskDetail, taskOrderCode } = props;
     
     //console.log('Add task detail collapsed', taskDetail);
-    console.log('Delete task detail logging',deleteTaskDetail);
+    //console.log('Delete task detail logging',deleteTaskDetail);
 
     const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
     const [formAction, setFormAction] = useState("");
     
-    console.log('Add task', taskDetail.isCollapsed);
+    //console.log('Add task', taskDetail.isCollapsed);
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -20,15 +20,16 @@ export default function TaskDetail (props) {
         } else {
         
         let newTaskDetail = {
-           id: taskDetail.id,
-           // orderCode: event.target.elements.orderCode.value,
+            id: taskDetail.id,
+            // orderCode: event.target.elements.orderCode.value,
             isCollapsed: true,
             status: taskDetail.status,
             resource: event.target.elements.resource.value,
             NoOfResource: event.target.elements.NoOfResource.value,
             hour: event.target.elements.hour.value,
             duration: event.target.elements.duration.value,
-            department: event.target.elements.department.value
+            department: event.target.elements.department.value,
+            taskOrderCode: taskDetail.taskOrderCode
         };
     
         addTaskDetail(newTaskDetail);

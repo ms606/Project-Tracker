@@ -2,11 +2,11 @@ import "../styles/statusLine.scss";
 import Task from "./TaskDetail";
 
 export default function StatusLine(props) {
-  const { status, taskDetail, addTaskDetail, deleteTask, addEmptyTask } = props;
+  const { status, taskDetail, addTaskDetail, deleteTask, addEmptyTask, taskOrderCode } = props;
 
   let taskList, tasksForStatus;
   
-  console.log('status',status);
+  //console.log('status',status);
 
   function handleAddEmpty() {
     addEmptyTask(status);
@@ -18,8 +18,8 @@ export default function StatusLine(props) {
     });
   }
 
-
-  console.log('tasksForStatus',tasksForStatus);
+  console.log('taskOrderNo',taskOrderCode);
+  //console.log('tasksForStatus',tasksForStatus);
   
   if (tasksForStatus) {
     taskList = tasksForStatus.map((task) => {
@@ -33,6 +33,7 @@ export default function StatusLine(props) {
           deleteTaskDetail= {(id) => deleteTask(id)}
           key             = {task.id}
           taskDetail      = {task}
+          taskOrderCode   = {taskOrderCode}
         />
       );
     });
