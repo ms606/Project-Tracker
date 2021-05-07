@@ -260,15 +260,64 @@ function Home() {
     }
   
 
-    async componentDidMount() {
-      Promise.all([
-        fetch("http://localhost:3000/tasks")
-         .then(res => res.json())        
-      ]).then(([urlOneData]) => {
-        this.setState({ apiResponse: urlOneData })
-      });
+   componentDidMount() {
+      
+           // await fetch("http://localhost:3000/tasks")
+           //  .then(function (response) {
+
+           //    if (response.ok) {
+           //          this.setState({ apiResponse: response.json() });
+           //         //console.log(response.json());
+           //        // return response.json();
+           //    } else {
+           //          return Promise.reject(response);
+           //    }
+           //  }).then(function (data) {
+           //        console.log(data);
+           //      //  this.setState({ apiResponse: data });
+           //  })  
+
+
+            // getFishAndChips = async () => {
+            //     const fish = await fetch("http://localhost:3000/tasks").then(response => response.json());
+
+            //       console.log(fish);
+
+
+            //     // const fishIds = fish.map(fish => fish.id),
+            //     // chipReqOpts = { method: 'POST', body: JSON.stringify({ fishIds }) };
+
+            //     // const chips = await fetch(this.chipsApiUrl, chipReqOpts).then(response => response.json());
+            // }
+
+
+          const getFishAndChips = async () => {
+                const fish = await fetch("http://localhost:3000/tasks").then(response => response.json());
+
+                console.log('fish',fish);
+
+
+                 //const fishIds = fish.map(fish => fish.id),
+                // chipReqOpts = { method: 'POST', body: JSON.stringify({ fishIds }) };
+
+                // const chips = await fetch(this.chipsApiUrl, chipReqOpts).then(response => response.json());
+            }
+
+            getFishAndChips();
 
       }
+
+
+      // Promise.all([
+      //   fetch("http://localhost:3000/tasks").then(res => res.json()),
+      //   fetch(`http://localhost:3000/taskDetail/VI2100103`).then(res => res.json())         
+      // ]).then(([urlOneData, urlTwoData]) => {
+
+      //   console.log('URL ONE DATA',urlOneData[urlOneData.length-1].orderCode);
+
+      //   this.setState({ apiResponse: urlOneData.concat(urlTwoData) })
+      // });
+
 
       // const response = await fetch("http://localhost:3000/tasks");
       // const json = await response.json();
@@ -280,7 +329,9 @@ function Home() {
       const Arr = [];
 
       Arr.push(this.state.apiResponse);
-      
+
+    
+
       return (
             <div>
             <table>
