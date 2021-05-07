@@ -10,6 +10,8 @@ export default function TaskDetail (props) {
     const [formAction, setFormAction] = useState("");
     
     //console.log('Add task', taskDetail.isCollapsed);
+    //console.log('propies ', props);
+    //console.log('propies detials', taskOrderCode);
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -21,7 +23,7 @@ export default function TaskDetail (props) {
         
         let newTaskDetail = {
             id: taskDetail.id,
-            // orderCode: event.target.elements.orderCode.value,
+            orderCode: taskOrderCode,
             isCollapsed: true,
             status: taskDetail.status,
             resource: event.target.elements.resource.value,
@@ -29,7 +31,7 @@ export default function TaskDetail (props) {
             hour: event.target.elements.hour.value,
             duration: event.target.elements.duration.value,
             department: event.target.elements.department.value,
-            taskOrderCode: taskDetail.taskOrderCode
+            //taskOrderCode: taskDetail.taskOrderCode
         };
     
         addTaskDetail(newTaskDetail);

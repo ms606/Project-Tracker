@@ -10,13 +10,11 @@ export default function StatusLine(props) {
     //  function handleAddEmpty() {
     //   addEmptyTask(status);
     //  }
-
-
-     useEffect(() => {
-      addEmptyTask(status);
+    useEffect(() => {
+     addEmptyTask(status);
     }, []);
 
-
+    // console.log( 'task order no', taskOrderCode );
  
   if (tasks) {
     tasksForStatus = tasks.filter((task) => {

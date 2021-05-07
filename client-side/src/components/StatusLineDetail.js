@@ -18,7 +18,8 @@ export default function StatusLine(props) {
     });
   }
 
-  console.log('taskOrderNo',taskOrderCode);
+  //console.log('props status line details',props.tasks.orderCode);
+  //console.log('taskOrderNoKewl',taskOrderCode);
   //console.log('tasksForStatus',tasksForStatus);
   
   if (tasksForStatus) {
@@ -30,10 +31,10 @@ export default function StatusLine(props) {
       return (
         <Task
           addTaskDetail   = {(task) => addTaskDetail(task)}
-          deleteTaskDetail= {(id) => deleteTask(id)}
+          deleteTaskDetail= {(id)   => deleteTask(id)}
           key             = {task.id}
           taskDetail      = {task}
-          taskOrderCode   = {taskOrderCode}
+          taskOrderCode   = {props.tasks[0].orderCode}
         />
       );
     });

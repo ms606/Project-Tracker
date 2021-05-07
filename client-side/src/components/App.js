@@ -13,6 +13,8 @@ import {
 
 function App() {
 
+
+
   return (
               
         <Router>
@@ -49,6 +51,8 @@ function App() {
 
 
 function Home() {
+
+
   
   
   const [tasks, setTasks] = useState([]);
@@ -115,8 +119,6 @@ function Home() {
     tasks = JSON.stringify(tasks);
     tasks = tasks.substring(1, tasks.length-1);
 
-    console.log(tasks);
-    
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -161,16 +163,18 @@ function Home() {
         duration: "",
         department: "",
         status: status,
-        taskOrderCode: "", 
+        orderCode: ""
       },
     ])
+
+    console.log('taskdetail',taskDetail);
     
   }
 
 
   // Function for second table 
   function addTaskDetail(taskToAdd) {  
-    let filteredTasks = tasks.filter((task) => {
+    let filteredTasks = taskDetail.filter((task) => {
       return task.id !== taskToAdd.id;
     });
 
@@ -179,7 +183,6 @@ function Home() {
     setTaskDetail(newTaskList);
 
     saveTaskDetailToLocalStorage(newTaskList);
-
   }
 
   // Function for storing task detail
@@ -187,20 +190,38 @@ function Home() {
   function saveTaskDetailToLocalStorage(tasks) {
     localStorage.setItem("taskDetail", JSON.stringify(tasks));
 
+    console.log('tasks gen ', tasks);
+    console.log('length by len', tasks[tasks.length-1]);
     //Saving into the database mySql
-    tasks = JSON.stringify(tasks);
-    tasks = tasks.substring(1, tasks.length-1);
+    //console.log('saveTaskDetailToLocalStorage', tasks[0]);
+    const orderCode = tasks[tasks.length-1].orderCode;
+
+
+    console.log('length tasks',tasks.length);
+
+    tasks = tasks[tasks.length - 1];
+    //if ((tasks[tasks.length-1]) > 0 ){
+      //tasks = JSON.stringify(tasks[tasks.length-1]);
+      //console.log('JSON.stringify', JSON.stringify(tasks[tasks.length-1]));
+    //}
+    //else {
+      tasks = JSON.stringify(tasks);
+      console.log('JSON.stringify', JSON.stringify(tasks));
+    //}
+
+    //tasks = tasks.substring(1, tasks.length-1);
 
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: tasks
     };
 
-    fetch(`http://localhost:3000/taskDetail/852`, requestOptions)
-      .then(response => response.json());     
-  
+    fetch(`http://localhost:3000/taskDetail/${orderCode}`, requestOptions)
+     .then(response => response.json());    
   }
+
+  // console.log('tasks lala12',tasks)
 
   return (
     <div className="App">
@@ -217,15 +238,14 @@ function Home() {
         </section>
 
           <StatusLineDetail
-              taskDetail={taskDetail}
-              addEmptyTask={addEmptyTaskDetail}
-              addTaskDetail={addTaskDetail}
-              deleteTask={deleteTask}
-              status="Create Task Activites"
-          />         
-   
-      </main>
-
+            taskDetail={taskDetail}
+            addEmptyTask={addEmptyTaskDetail}
+            addTaskDetail={addTaskDetail}
+            deleteTask={deleteTask}
+            status="Create Task Activites"              
+            tasks={tasks}
+          />            
+      </main>      
       </div>
   );
 }
@@ -241,10 +261,19 @@ function Home() {
   
 
     async componentDidMount() {
-      const response = await fetch("http://localhost:3000/tasks");
-      const json = await response.json();
-      this.setState({ apiResponse: json });
-    }
+      Promise.all([
+        fetch("http://localhost:3000/tasks")
+         .then(res => res.json())        
+      ]).then(([urlOneData]) => {
+        this.setState({ apiResponse: urlOneData })
+      });
+
+      }
+
+      // const response = await fetch("http://localhost:3000/tasks");
+      // const json = await response.json();
+      // this.setState({ apiResponse: json });      
+  
 
     render() {
       
@@ -264,8 +293,8 @@ function Home() {
               <th>Expected Shipping</th>
               <th>Shipping</th>              
             </thead>
-            <tbody>
 
+             <tbody>
                {Arr[0].map((task) => 
                  <tr key={task.id}>  
                     <td>{task.orderCode}</td>
@@ -275,9 +304,12 @@ function Home() {
                     <td>{task.machineDet}</td>
                     <td>{task.expectedShipping}</td>
                     <td>{task.shipping}</td>
+
+                    <p>This is for test purpose</p>                    
                  </tr>                   
-               )}
-               </tbody>  
+               )
+               }
+             </tbody>  
             </table> 
             </div>
       )
