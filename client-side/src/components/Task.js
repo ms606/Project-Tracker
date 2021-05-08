@@ -30,10 +30,7 @@ export default function Task(props) {
           isCollapsed: true,
           expectedShipping: event.target.elements.expectedShipping.value,
           shipping: event.target.elements.shipping.value
-        };
-
-
-        //console.log(event);
+        };        
 
         addTask(newTask);
           setCollapsed(true);

@@ -4,6 +4,9 @@ import "../styles/App.scss";
 import "../styles/displayTable.scss";
 import StatusLine from "./StatusLine";
 import StatusLineDetail from "./StatusLineDetail";
+import StatusLineEdit from "./StatusLineEdit";
+import StatusLineDetailEdit from "./StatusLineDetailEdit";
+
 import {
   BrowserRouter as Router,
   Switch, 
@@ -12,16 +15,13 @@ import {
 } from "react-router-dom";
 
 function App() {
-
-
-
-  return (
-              
+  return (              
         <Router>
         <div>
           <ul>
             <li>
               <Link to="/display" className="linkdesign">Display</Link>
+              <Link to="/edit" className="linkdesign">Edit</Link>
               <Link to="/" className="linkdesign">Home</Link>
             </li>    
           </ul>
@@ -39,8 +39,11 @@ function App() {
             <Route path="/display">
               <Display /> 
             </Route>
+            <Route path="/edit">
+              <Edit />
+            </Route>
             <Route path="/">
-              <Home />
+              <Home />              
             </Route>
           </Switch>
         </div>
@@ -50,10 +53,29 @@ function App() {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function Home() {
-
-
-  
   
   const [tasks, setTasks] = useState([]);
   const [taskDetail, setTaskDetail] = useState([]);
@@ -87,18 +109,31 @@ function Home() {
     ]);
   }
 
-  function addTask(taskToAdd) {  
-    
+  function addTask(taskToAdd) {
+
+    //console.log('taskToAdd puranay tasks 1',tasks);
+
+    loadTasksFromLocalStorage();
+
+    let loadedTasks = localStorage.getItem("tasks");
+
+    let tasks = JSON.parse(loadedTasks);
+
+    //console.log('taskToAdd puranay tasks 2',tasks);
+    //console.log('taskToAdd',taskToAdd);
+
     let filteredTasks = tasks.filter((task) => {
+      console.log('task id ',task);
       return task.id !== taskToAdd.id;
     });
+
+    // console.log('filtered list ',filteredTasks);
 
     let newTaskList = [...filteredTasks, taskToAdd];
 
     setTasks(newTaskList);
 
     saveTasksToLocalStorage(newTaskList);
-
     }
 
 
@@ -251,6 +286,11 @@ function Home() {
 }
 
 
+
+
+
+
+
  // To change displays
  class Display extends React.Component{
 
@@ -260,64 +300,14 @@ function Home() {
     }
   
 
-   componentDidMount() {
-      
-           // await fetch("http://localhost:3000/tasks")
-           //  .then(function (response) {
-
-           //    if (response.ok) {
-           //          this.setState({ apiResponse: response.json() });
-           //         //console.log(response.json());
-           //        // return response.json();
-           //    } else {
-           //          return Promise.reject(response);
-           //    }
-           //  }).then(function (data) {
-           //        console.log(data);
-           //      //  this.setState({ apiResponse: data });
-           //  })  
-
-
-            // getFishAndChips = async () => {
-            //     const fish = await fetch("http://localhost:3000/tasks").then(response => response.json());
-
-            //       console.log(fish);
-
-
-            //     // const fishIds = fish.map(fish => fish.id),
-            //     // chipReqOpts = { method: 'POST', body: JSON.stringify({ fishIds }) };
-
-            //     // const chips = await fetch(this.chipsApiUrl, chipReqOpts).then(response => response.json());
-            // }
-
-
-          const getFishAndChips = async () => {
-                const fish = await fetch("http://localhost:3000/tasks").then(response => response.json());
-
-                console.log('fish',fish);
-
-
-                 //const fishIds = fish.map(fish => fish.id),
-                // chipReqOpts = { method: 'POST', body: JSON.stringify({ fishIds }) };
-
-                // const chips = await fetch(this.chipsApiUrl, chipReqOpts).then(response => response.json());
-            }
-
-            getFishAndChips();
-
-      }
-
-
-      // Promise.all([
-      //   fetch("http://localhost:3000/tasks").then(res => res.json()),
-      //   fetch(`http://localhost:3000/taskDetail/VI2100103`).then(res => res.json())         
-      // ]).then(([urlOneData, urlTwoData]) => {
-
-      //   console.log('URL ONE DATA',urlOneData[urlOneData.length-1].orderCode);
-
-      //   this.setState({ apiResponse: urlOneData.concat(urlTwoData) })
-      // });
-
+    async componentDidMount() {
+      Promise.all([
+        fetch("http://localhost:3000/tasks")
+         .then(res => res.json())        
+      ]).then(([urlOneData]) => {
+        this.setState({ apiResponse: urlOneData })
+      });
+    }
 
       // const response = await fetch("http://localhost:3000/tasks");
       // const json = await response.json();
@@ -329,9 +319,7 @@ function Home() {
       const Arr = [];
 
       Arr.push(this.state.apiResponse);
-
-    
-
+      
       return (
             <div>
             <table>
@@ -366,5 +354,221 @@ function Home() {
       )
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// To Edit 
+function Edit(){
+
+  const [tasks, setTasks] = useState([]);
+  const [apiData, apiResponseData] = useState({});
+  const [taskDetail, setTaskDetail] = useState([]);
+
+  useEffect(() => {
+
+   loadTasksFromLocalStorage();
+
+  }, []);
+
+  function addEmptyTask(status) {
+    const lastTask = tasks[tasks.length - 1];
+
+    let newTaskId = 1;
+
+    if (lastTask !== undefined) {
+      newTaskId = lastTask.id + 1;
+    }
+
+    setTasks((tasks) => [
+      ...tasks,
+      {
+        id: newTaskId,
+        customer: "",
+        activity: "",
+        urgency: "",
+        status: status,
+        orderCode: "",
+        machineDet: "",
+        expectedShipping: "",
+        shipping: ""
+      },
+    ]);
+  }
+
+  function addTask(taskToAdd) {
+    let filteredTasks = tasks.filter((task) => {
+      return task.id !== taskToAdd.id;
+    });
+
+    let newTaskList = [...filteredTasks, taskToAdd];
+
+    setTasks(newTaskList);
+
+    saveTasksToLocalStorage(newTaskList);
+  }
+
+  function deleteTask(taskId) {
+    let filteredTasks = tasks.filter((task) => {
+      return task.id !== taskId;
+    });
+
+    setTasks(filteredTasks);
+
+    saveTasksToLocalStorage(filteredTasks);
+  }
+
+    function saveTasksToLocalStorage(tasks) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  async function loadTasksFromLocalStorage() {
+    
+     const response = await fetch("http://localhost:3000/tasks");
+     const json = await response.json();
+     console.log('json edit', json);
+
+     const Arr = [];
+
+     Arr.push(json);
+
+     apiResponseData(json);
+    
+     console.log('Api Data array', Arr);
+
+     console.log('Api Data', apiData);
+
+    let loadedTasks = localStorage.getItem("tasks");
+
+    let tasks = JSON.parse(loadedTasks);
+
+    //console.log('Editing Calling', tasks);
+
+    //if (tasks) {
+      await setTasks(json);
+    //}
+  }
+
+
+
+  // Function for adding task details 
+  function addEmptyTaskDetail(status) {
+    const lastTask = taskDetail[taskDetail.length - 1];
+
+    let newTaskId = 1;
+
+    if (lastTask !== undefined) {
+      newTaskId = lastTask.id + 1;
+    }
+
+    setTaskDetail((taskDetail) => [
+      ...taskDetail,
+      {
+        id: newTaskId,
+        NoOfResource: "",
+        hour: "",
+        duration: "",
+        department: "",
+        status: status,
+        orderCode: ""
+      },
+    ])
+
+    console.log('taskdetail',taskDetail);
+    
+  }
+
+
+  // Function for second table 
+  function addTaskDetail(taskToAdd) {  
+    let filteredTasks = taskDetail.filter((task) => {
+      return task.id !== taskToAdd.id;
+    });
+
+    let newTaskList = [...filteredTasks, taskToAdd];
+
+    setTaskDetail(newTaskList);
+
+    saveTaskDetailToLocalStorage(newTaskList);
+  }
+
+  // Function for storing task detail
+  
+  function saveTaskDetailToLocalStorage(tasks) {
+    localStorage.setItem("taskDetail", JSON.stringify(tasks));
+
+    console.log('tasks gen ', tasks);
+    console.log('length by len', tasks[tasks.length-1]);
+    //Saving into the database mySql
+    //console.log('saveTaskDetailToLocalStorage', tasks[0]);
+    const orderCode = tasks[tasks.length-1].orderCode;
+
+
+    console.log('length tasks',tasks.length);
+
+    tasks = tasks[tasks.length - 1];
+    //if ((tasks[tasks.length-1]) > 0 ){
+      //tasks = JSON.stringify(tasks[tasks.length-1]);
+      //console.log('JSON.stringify', JSON.stringify(tasks[tasks.length-1]));
+    //}
+    //else {
+      tasks = JSON.stringify(tasks);
+      console.log('JSON.stringify', JSON.stringify(tasks));
+    //}
+
+    //tasks = tasks.substring(1, tasks.length-1);
+
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: tasks
+    };
+
+    fetch(`http://localhost:3000/taskDetail/${orderCode}`, requestOptions)
+     .then(response => response.json());    
+  }
+
+
+
+  return (
+    <div className="App">
+      <h1>Task Management</h1>
+      <main>
+        <section>
+          <StatusLineEdit
+            tasks={tasks}
+            addEmptyTask={addEmptyTask}
+            addTask={addTask}
+            deleteTask={deleteTask}
+            status="Edit Task"
+          />
+
+          <StatusLineDetailEdit
+            taskDetail={taskDetail}
+            addEmptyTask={addEmptyTaskDetail}
+            addTaskDetail={addTaskDetail}
+            deleteTask={deleteTask}
+            status="Create Task Activites"              
+            tasks={tasks}
+          />     
+
+        </section>
+      </main>
+    </div>
+  );
+}
+
 
 export default App;
