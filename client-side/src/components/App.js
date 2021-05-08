@@ -331,9 +331,14 @@ function Home() {
               <th>Machine Detail</th>
               <th>Expected Shipping</th>
               <th>Shipping</th>              
+              <th>Resource</th>  
+              <th>No Of Resource</th>  
+              <th>hour</th>  
+              <th>duration</th>  
+              <th>department</th>  
             </thead>
 
-             <tbody>
+            <tbody>
                {Arr[0].map((task) => 
                  <tr key={task.id}>  
                     <td>{task.orderCode}</td>
@@ -343,12 +348,15 @@ function Home() {
                     <td>{task.machineDet}</td>
                     <td>{task.expectedShipping}</td>
                     <td>{task.shipping}</td>
-
-                    <p>This is for test purpose</p>                    
+                    <td>{task.resource}</td>
+                    <th>{task.NoOfResource}</th>  
+                    <th>{task.hour}</th>  
+                    <th>{task.duration}</th>  
+                    <th>{task.department}</th>                      
                  </tr>                   
                )
                }
-             </tbody>  
+            </tbody>  
             </table> 
             </div>
       )
