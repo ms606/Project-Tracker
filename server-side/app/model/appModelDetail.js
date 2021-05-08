@@ -73,7 +73,7 @@ TaskDetail.remove = function(id, result){
 
 
 TaskDetail.getTaskEverythingById = function (taskId, result) {
-        sql.query("Select t1.orderCode, t1.machineDet, t1.shipping, t1.task, t1.title, t1.urgency, t2.department, t2.duration, t2.hour, t2.NoOfResource, t2.resource from tasks t1, task_detail t2 where t1.orderCode = t2.orderCode and t1.orderCode = ? ", taskId, function (err, res) {             
+  sql.query("select orderCode, activity, urgency, machineDet, expectedShipping, shipping, status, department, resource, duration, Hour, NoOfResource from ( select all orderCode, activity, urgency, machineDet, expectedShipping, shipping, status, null department, null resource, null duration, null Hour, null NoOfResource  from   tasks union all select all orderCode, null activity, null urgency, null machineDet, null expectedShipping, null shipping, null status, department, resource, duration, Hour, NoOfResource  from task_detail) t3 order by orderCode", taskId, function (err, res) {             
                 if(err) {
                     console.log("error: ", err);
                     result(err, null);
