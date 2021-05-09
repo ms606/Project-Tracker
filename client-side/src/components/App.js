@@ -206,7 +206,6 @@ function Home() {
     
   }
 
-
   // Function for second table 
   function addTaskDetail(taskToAdd) {  
     let filteredTasks = taskDetail.filter((task) => {
@@ -300,18 +299,24 @@ function Home() {
     }
   
 
-    async componentDidMount() {
-      Promise.all([
-        fetch("http://localhost:3000/tasks")
-         .then(res => res.json())        
-      ]).then(([urlOneData]) => {
-        this.setState({ apiResponse: urlOneData })
-      });
-    }
+     async componentDidMount() {
+    //   Promise.all([
+    //     fetch("http://localhost:3000/taskEverything")
+    //      .then(res => res.json())        
+    //   ]).then(([urlOneData]) => {
+    //     this.setState({ apiResponse: urlOneData })
+    //   });
 
-      // const response = await fetch("http://localhost:3000/tasks");
-      // const json = await response.json();
-      // this.setState({ apiResponse: json });      
+      const response = await fetch("http://localhost:3000/taskEverything/1");
+      const json = await response.json();
+      this.setState({ apiResponse: json });
+
+
+     }
+
+      //  const response = await fetch("http://localhost:3000/taskEverything");
+      //  const json = await response.json();
+      //  this.setState({ apiResponse: json });      
   
 
     render() {
@@ -322,7 +327,7 @@ function Home() {
       
       return (
             <div>
-            <table>
+               <table>
             <thead>
               <th>Order Code</th>
               <th>Customer</th> 
@@ -343,7 +348,7 @@ function Home() {
                  <tr key={task.id}>  
                     <td>{task.orderCode}</td>
                     <td>{task.customer}</td>
-                    <td>{task.Activity}</td>
+                    <td>{task.activity}</td>
                     <td>{task.urgency}</td>
                     <td>{task.machineDet}</td>
                     <td>{task.expectedShipping}</td>
@@ -454,13 +459,13 @@ function Edit(){
 
      apiResponseData(json);
     
-     console.log('Api Data array', Arr);
+     //console.log('Api Data array', Arr);
 
-     console.log('Api Data', apiData);
+     //console.log('Api Data', apiData);
 
     let loadedTasks = localStorage.getItem("tasks");
 
-    let tasks = JSON.parse(loadedTasks);
+    //let tasks = JSON.parse(loadedTasks);
 
     //console.log('Editing Calling', tasks);
 
@@ -494,7 +499,7 @@ function Edit(){
       },
     ])
 
-    console.log('taskdetail',taskDetail);
+    //console.log('taskdetail',taskDetail);
     
   }
 
@@ -517,14 +522,14 @@ function Edit(){
   function saveTaskDetailToLocalStorage(tasks) {
     localStorage.setItem("taskDetail", JSON.stringify(tasks));
 
-    console.log('tasks gen ', tasks);
-    console.log('length by len', tasks[tasks.length-1]);
+    //console.log('tasks gen ', tasks);
+    //console.log('length by len', tasks[tasks.length-1]);
     //Saving into the database mySql
     //console.log('saveTaskDetailToLocalStorage', tasks[0]);
     const orderCode = tasks[tasks.length-1].orderCode;
 
 
-    console.log('length tasks',tasks.length);
+    //console.log('length tasks',tasks.length);
 
     tasks = tasks[tasks.length - 1];
     //if ((tasks[tasks.length-1]) > 0 ){
@@ -533,7 +538,7 @@ function Edit(){
     //}
     //else {
       tasks = JSON.stringify(tasks);
-      console.log('JSON.stringify', JSON.stringify(tasks));
+     // console.log('JSON.stringify', JSON.stringify(tasks));
     //}
 
     //tasks = tasks.substring(1, tasks.length-1);
@@ -563,15 +568,7 @@ function Edit(){
             status="Edit Task"
           />
 
-          <StatusLineDetailEdit
-            taskDetail={taskDetail}
-            addEmptyTask={addEmptyTaskDetail}
-            addTaskDetail={addTaskDetail}
-            deleteTask={deleteTask}
-            status="Create Task Activites"              
-            tasks={tasks}
-          />     
-
+        
         </section>
       </main>
     </div>

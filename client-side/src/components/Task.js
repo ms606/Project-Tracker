@@ -57,6 +57,15 @@ export default function Task(props) {
           defaultValue={task.title}
         />
         <br />
+        <label>Enter Customer</label>
+        <input
+          type="text"
+          className="description input"
+          name="customer"
+          placeholder="Enter Customer"
+          defaultValue={task.customer}
+        />
+        <br />
         <label>Enter Machine Detail</label>
         <input
           type="text"
@@ -75,15 +84,6 @@ export default function Task(props) {
           placeholder="Enter Activity"
           disabled={collapsed}
           defaultValue={task.activity}
-        />
-        <br />
-        <label>Enter Customer</label>
-        <textarea
-          rows="2"
-          className="description input"
-          name="customer"
-          placeholder="Enter Customer"
-          defaultValue={task.customer}
         />
         <br />
         <label>Select Expected Shipping</label>

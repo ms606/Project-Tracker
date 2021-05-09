@@ -10,6 +10,7 @@ export default function StatusLineEdit(props) {
     addEmptyTask(status);
   }
 
+
 //   if (tasks) {
 //     tasksForStatus = tasks.filter((task) => {
 //       return task.status === status;

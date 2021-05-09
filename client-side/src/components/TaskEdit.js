@@ -1,12 +1,30 @@
 import "../styles/taskEdit.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import StatusLineDetailEdit from "./StatusLineDetailEdit";
+
 
 export default function Task(props) {
   const { addTask, deleteTask, task } = props;
 
+  
+  const [tasks, setTasks] = useState([]);
+  const [taskDetail, setTaskDetail] = useState([]);
+
+
   const [urgencyLevel, setUrgencyLevel] = useState(task.urgency);
   const [collapsed,    setCollapsed   ] = useState(task.isCollapsed);
   const [formAction,   setFormAction  ] = useState("");
+
+  useEffect(() => {
+    callTaskDetailEdit();
+   }, []);
+   
+  async function callTaskDetailEdit(){
+    const response = await fetch(`http://localhost:3000/taskDetailTask/${task.orderCode}`);
+    const json = await response.json();
+    setTaskDetail(json); //Updating variable for task detail 
+    setTasks(task); //Updating variable for task detail 
+  }
 
   function setUrgency(event) {
     setUrgencyLevel(event.target.attributes.urgency.value);
@@ -21,10 +39,10 @@ export default function Task(props) {
       } else {
         let newTask = {
           id: task.id,
-          orderCode: event.target.elements.orderCode.value,
+          orderCode:  event.target.elements.orderCode.value,
           machineDet: event.target.elements.machineDet.value,
-          activity: event.target.elements.activity.value,
-          customer: event.target.elements.customer.value,
+          activity:   event.target.elements.activity.value,
+          customer:   event.target.elements.customer.value,
           urgency: urgencyLevel,
           status: task.status,
           isCollapsed: true,
@@ -43,6 +61,82 @@ export default function Task(props) {
     }
   }
 
+
+
+///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+// All details regarding status line detail edit 
+
+
+console.log('checking on every step', taskDetail)
+
+// Function for adding task details 
+function addEmptyTaskDetail(status) {
+  const lastTask = taskDetail[taskDetail.length - 1];
+
+  let newTaskId = 1;
+
+  if (lastTask !== undefined) {
+    newTaskId = lastTask.id + 1;
+  }
+
+  setTaskDetail((taskDetail) => [
+    ...taskDetail,
+    {
+      id: newTaskId,
+      NoOfResource: "",
+      hour: "",
+      duration: "",
+      department: "",
+      status: status,
+      orderCode: ""
+    },
+  ])  
+}
+
+console.log('taskdetail',taskDetail);
+
+
+// Function for second table 
+function addTaskDetail(taskToAdd) { 
+  
+  let filteredTasks = taskDetail.filter((task) => {
+    return task.id !== taskToAdd.id;
+  });
+
+  let newTaskList = [...filteredTasks, taskToAdd];
+
+  setTaskDetail(newTaskList);
+
+  saveTaskDetailToLocalStorage(newTaskList);
+}
+
+
+// Function for storing task detail
+function saveTaskDetailToLocalStorage(tasks) {
+  localStorage.setItem("taskDetail", JSON.stringify(tasks));
+
+  const orderCode = tasks[tasks.length-1].orderCode;
+
+  tasks = tasks[tasks.length - 1];
+
+  tasks = JSON.stringify(tasks);
+
+  const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: tasks
+    };
+
+  fetch(`http://localhost:3000/taskDetail/${orderCode}`, requestOptions)
+   .then(response => response.json());    
+}
+
+
+   console.log('task testing', task)
   return (
      <div className={`task ${collapsed ? "collapsedTask" : ""}`}>
         <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}> 
@@ -54,6 +148,15 @@ export default function Task(props) {
           placeholder="Enter Order Code "
           disabled={collapsed}
           defaultValue={task.orderCode}
+        />
+        <br />
+        <label>Enter Customer</label>
+        <input
+          type="text" 
+          className="description input"
+          name="customer"
+          placeholder="Enter Customer"
+          defaultValue={task.customer}
         />
         <br />
         <label>Enter Machine Detail</label>
@@ -76,15 +179,7 @@ export default function Task(props) {
           defaultValue={task.activity}
         />
         <br />
-        <label>Enter Customer</label>
-        <textarea
-          rows="2"
-          className="description input"
-          name="customer"
-          placeholder="Enter Customer"
-          defaultValue={task.customer}
-        />
-        <br />
+        
         <label>Select Expected Shipping</label>
         <input
           type="date"
@@ -103,7 +198,7 @@ export default function Task(props) {
           name="shipping"
           placeholder="Shipping"
           disabled={collapsed}
-          defaultValue={task.expectedShipping}          
+          defaultValue={task.shipping}          
         />
         <br />
         
@@ -159,7 +254,19 @@ export default function Task(props) {
           </button>
         )}
       </form>
+
+      <StatusLineDetailEdit
+            taskDetail={taskDetail}
+            addEmptyTask={addEmptyTaskDetail}
+            addTaskDetail={addTaskDetail}
+            // deleteTask={deleteTask}
+            status="Create Task Activites"              
+            tasks={tasks}
+          />            
+
     </div>
+
+
   );
 }
 

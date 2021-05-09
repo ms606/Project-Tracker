@@ -1,28 +1,33 @@
 import "../styles/statusLine.scss";
 import Task from "./TaskDetailEdit";
 
-export default function StatusLine(props) {
+export default function StatusLineDetailEdit(props) {
   const { status, taskDetail, addTaskDetail, deleteTask, addEmptyTask, taskOrderCode } = props;
 
   let taskList, tasksForStatus;
   
-  //console.log('status',status);
+  console.log('fjhadskjfdsjklfhdasljfdsjaklhfljdksaf',props);
 
   function handleAddEmpty() {
     addEmptyTask(status);
   }
 
-  if (taskDetail) {
-    tasksForStatus = taskDetail.filter((task) => {
-    return task.status === status;
-    });
-  }
 
-  //console.log('props status line details',props.tasks.orderCode);
+
+   if (taskDetail) {
+  //   tasksForStatus = taskDetail.filter((task) => {
+  //     console.log('looping task', task)
+  //   return task.status === status;
+        tasksForStatus = taskDetail;
+  //   });
+   }
+
+  //console.log('props status line details',props);
   //console.log('taskOrderNoKewl',taskOrderCode);
   //console.log('tasksForStatus',tasksForStatus);
   
   if (tasksForStatus) {
+
     taskList = tasksForStatus.map((task) => {
 
       //console.log('Loop understanding here..', task)  ;
@@ -34,7 +39,7 @@ export default function StatusLine(props) {
           deleteTaskDetail= {(id)   => deleteTask(id)}
           key             = {task.id}
           taskDetail      = {task}
-          taskOrderCode   = {props.tasks[0].orderCode}
+         // taskOrderCode   = {props.tasks[0].orderCode}
         />
       );
     });

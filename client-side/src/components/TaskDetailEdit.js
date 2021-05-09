@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function TaskDetail (props) {
+export default function TaskDetailEdit (props) {
     const { addTaskDetail, deleteTaskDetail, taskDetail, taskOrderCode } = props;
     
     //console.log('Add task detail collapsed', taskDetail);
@@ -10,7 +10,7 @@ export default function TaskDetail (props) {
     const [formAction, setFormAction] = useState("");
     
     //console.log('Add task', taskDetail.isCollapsed);
-    //console.log('propies ', props);
+    console.log('propies ', props);
     //console.log('propies detials', taskOrderCode);
 
     function handleSubmit(event) {
@@ -30,8 +30,7 @@ export default function TaskDetail (props) {
             NoOfResource: event.target.elements.NoOfResource.value,
             hour: event.target.elements.hour.value,
             duration: event.target.elements.duration.value,
-            department: event.target.elements.department.value,
-            //taskOrderCode: taskDetail.taskOrderCode
+            department: event.target.elements.department.value
         };
     
         addTaskDetail(newTaskDetail);
