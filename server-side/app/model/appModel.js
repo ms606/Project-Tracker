@@ -29,8 +29,7 @@ Task.createTask = function (newTask, result) {
             });           
 };
 
-Task.getTaskById = function (taskId, result) {
-        sql.query("Select * from tasks where id = ? ", taskId, function (err, res) {             
+Task.getTaskById = function (taskId, result) {        sql.query("Select orderCode, customer, machineDet, activity, urgency, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y')  shipping from tasks where id = ? ", taskId, function (err, res) {             
                 if(err) {
                     console.log("error: ", err);
                     result(err, null);
@@ -43,7 +42,7 @@ Task.getTaskById = function (taskId, result) {
 };
 
 Task.getAllTask = function (result) {
-        sql.query("Select * from tasks", function (err, res) {
+        sql.query("Select orderCode, customer, machineDet, activity, urgency, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y') shipping from tasks", function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
