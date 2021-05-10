@@ -10,7 +10,8 @@ var Task = function(task){
     this.urgency          = task.urgency;
     this.machineDet       = task.machineDet;
     this.expectedShipping = task.expectedShipping;
-    this.Shipping         = task.Shipping;
+    this.shipping         = task.shipping;
+    this.status_new       = task.status_new;
 };
 
 Task.createTask = function (newTask, result) {    
@@ -29,7 +30,7 @@ Task.createTask = function (newTask, result) {
             });           
 };
 
-Task.getTaskById = function (taskId, result) {        sql.query("Select orderCode, customer, machineDet, activity, urgency, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y')  shipping from tasks where id = ? ", taskId, function (err, res) {             
+Task.getTaskById = function (taskId, result) {        sql.query("Select orderCode, customer, machineDet, activity, urgency, status_new, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y')  shipping from tasks where id = ? ", taskId, function (err, res) {             
                 if(err) {
                     console.log("error: ", err);
                     result(err, null);
@@ -42,7 +43,7 @@ Task.getTaskById = function (taskId, result) {        sql.query("Select orderCod
 };
 
 Task.getAllTask = function (result) {
-        sql.query("Select orderCode, customer, machineDet, activity, urgency, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y') shipping from tasks", function (err, res) {
+        sql.query("Select orderCode, customer, machineDet, activity, status_new, urgency, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y') shipping from tasks", function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
@@ -57,8 +58,8 @@ Task.getAllTask = function (result) {
 };
 
 Task.updateById = function(id, task, result){
-  sql.query("UPDATE tasks SET activity = ? ,  urgency = ?, machineDet = ? , expectedShipping = ? , Shipping = ? , orderCode = ?  WHERE id = ?", 
-                [task.activity, task.urgency, task.machineDet, task.expectedShipping, task.Shipping, task.orderCode, id], function (err, res) {
+  sql.query("UPDATE tasks SET activity = ? ,  urgency = ?, machineDet = ? , expectedShipping = ? , Shipping = ? , orderCode = ?   status_new = ? WHERE id = ?", 
+                [task.activity, task.urgency, task.machineDet, task.expectedShipping, task.Shipping, task.orderCode, task.toString, id], function (err, res) {
           if(err) {
               console.log("error: ", err);
                 result(null, err);

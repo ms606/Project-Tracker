@@ -80,13 +80,13 @@ TaskDetail.getTaskEverythingById = function (taskId, result) {
 from
 ( 
     
-    select t1.orderCode, t1.customer, t1.activity, t1.urgency, t1.machineDet, t1.expectedShipping, t1.shipping, t1.status, null department, null resource,  sum(t2.duration)  duration, null Hour, null NoOfResource  		  
+    select t1.orderCode, t1.customer, t1.activity,  null department, t1.urgency, t1.machineDet, t1.expectedShipping, t1.shipping, t1.status, null resource,  sum(t2.duration)  duration, null Hour, null NoOfResource  		  
     from   tasks t1, task_detail t2
     where  t1.orderCode = t2.orderCode
     group by t1.orderCode, t1.activity, t1.urgency, t1.machineDet, t1.expectedShipping, t1.shipping, t1.status	
     union all 
     
-    select all orderCode, null customer, null activity, null urgency, null machineDet, null expectedShipping, null shipping, null status, department, resource, duration, Hour, NoOfResource  
+    select all orderCode, null customer, null activity, department, null urgency, null machineDet, null expectedShipping, null shipping, null status, resource, duration, Hour, NoOfResource  
     from  task_detail
     
 ) t3 
