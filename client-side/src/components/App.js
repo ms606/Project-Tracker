@@ -144,6 +144,15 @@ function Home() {
 
 
   function deleteTask(taskId) {
+  // console.log('idher phunch gayaaaaa', taskId);
+    const requestOptions = {
+      method: 'DELETE',
+    };
+
+    fetch(`http://localhost:3000/tasks/${taskId}`, requestOptions)
+      .then(response => response.json());
+
+
     let filteredTasks = tasks.filter((task) => {
       return task.id !== taskId;
     });
@@ -151,6 +160,9 @@ function Home() {
     setTasks(filteredTasks);
 
     saveTasksToLocalStorage(filteredTasks);
+
+    window.location.reload();
+
   }
 
 
@@ -227,6 +239,40 @@ function Home() {
     saveTaskDetailToLocalStorage(newTaskList);
   }
 
+
+  function deleteTaskDetail(taskDetail) {
+   
+
+    console.log('idher restslkjsdakldjjkllsdjsdjfsdlfjlkj', taskDetail);   
+
+    taskDetail = JSON.stringify(taskDetail);
+    console.log('idher phunch poori detail k sath', taskDetail);
+  //  taskDetail = taskDetail.substring(1, taskDetail.length-1);
+
+     const requestOptions = {
+       method: 'DELETE',
+       headers: { 'Content-Type': 'application/json' },
+       body: taskDetail
+     };
+
+     fetch(`http://localhost:3000/taskDetail/${taskDetail}`, requestOptions)
+       .then(response => response.json());
+
+
+
+
+    let filteredTasks = tasks.filter((taskDetail) => {
+      return taskDetail.id !== taskDetail.id;
+    });
+
+   setTaskDetail(filteredTasks);
+
+   //saveTaskDetailToLocalStorage(filteredTasks);
+
+   // window.location.reload();
+    
+  }
+
   // Function for storing task detail
   
   function saveTaskDetailToLocalStorage(tasks) {
@@ -237,8 +283,8 @@ function Home() {
     //Saving into the database mySql
     //console.log('saveTaskDetailToLocalStorage', tasks[0]);
     const orderCode = tasks[tasks.length-1].orderCode;
-
-
+   
+    console.log('Order code kya hai ', orderCode);
     console.log('length tasks',tasks.length);
 
     tasks = tasks[tasks.length - 1];
@@ -283,7 +329,7 @@ function Home() {
             taskDetail={taskDetail}
             addEmptyTask={addEmptyTaskDetail}
             addTaskDetail={addTaskDetail}
-            deleteTask={deleteTask}
+            deleteTaskDetail={deleteTaskDetail}
             status="Create Task Activites"              
             tasks={tasks}
           />            
@@ -343,13 +389,15 @@ function Home() {
               <th>department</th>  
               <th>Urgency</th>
               <th>Machine Detail</th>
-              <th>Expected Shipping</th>
-              <th>Shipping</th>              
               <th>Resource</th>  
               <th>No Of Resource</th>  
               <th>hour</th>  
               <th>duration</th>  
-              
+              <th>Start Date</th>  
+              <th>End Date</th>  
+              <th>Expected Shipping</th>
+              <th>Shipping</th>              
+              <th>Delay</th>   
             </thead>
 
             <tbody>
@@ -361,12 +409,16 @@ function Home() {
                     <th>{task.department}</th>                      
                     <td>{task.urgency}</td>
                     <td>{task.machineDet}</td>
-                    <td>{task.expectedShipping}</td>
-                    <td>{task.shipping}</td>
                     <td>{task.resource}</td>
                     <th>{task.NoOfResource}</th>  
                     <th>{task.hour}</th>  
                     <th>{task.duration}</th>                      
+                    <th>{task.startDate}</th>                      
+                    <th>{task.endDate}</th>                      
+                    <td>{task.expectedShipping}</td>
+                    <td>{task.shipping}</td>
+                    <td>{task.delay}</td>
+                    
                  </tr>                   
                )
                }
@@ -443,6 +495,15 @@ function Edit(){
   }
 
   function deleteTask(taskId) {
+
+     const requestOptions = {
+      method: 'DELETE',
+    };
+
+    fetch(`http://localhost:3000/tasks/${taskId}`, requestOptions)
+      .then(response => response.json());
+
+
     let filteredTasks = tasks.filter((task) => {
       return task.id !== taskId;
     });
@@ -504,7 +565,9 @@ function Edit(){
         duration: "",
         department: "",
         status: status,
-        orderCode: ""
+        orderCode: "",
+        startDate: "",
+        endDate: ""
       },
     ])
 

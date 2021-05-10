@@ -39,7 +39,7 @@ export default function Task(props) {
     }
 
     if (formAction === "delete") {
-      deleteTask(task.id);
+      deleteTask(task.orderCode);
     }
   }
 
@@ -121,7 +121,7 @@ export default function Task(props) {
           name="shipping"
           placeholder="Shipping"
           disabled={collapsed}
-          defaultValue={task.expectedShipping}          
+          defaultValue={task.shipping}          
         />
 
         <br />

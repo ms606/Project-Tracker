@@ -1,4 +1,5 @@
 import { useState } from "react";
+import moment from "moment";
 
 export default function TaskDetailEdit (props) {
     const { addTaskDetail, deleteTaskDetail, taskDetail, taskOrderCode } = props;
@@ -8,7 +9,32 @@ export default function TaskDetailEdit (props) {
 
     const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
     const [formAction, setFormAction] = useState("");
+    const [duration,   setDuration]   = useState("");
+    const [enddd,      setEnddd]      = useState("");
     
+
+     function handleChangeDur(e){
+      setDuration(e.target.value);
+    }
+
+    function handleChange(e){
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      var date = new Date(e.target.value ) ;
+
+      var d  = new Date(date);
+
+      d.setDate(date.getDate() + parseInt(duration));
+      
+      console.log(moment(d).format('DD-MMM-YYYY'));     
+
+      console.log(duration);     
+
+      taskDetail.endDate = moment(d).format('DD-MMM-YYYY');
+
+      setEnddd(moment(d).format('DD-MMM-YYYY'));
+
+    }
+
     //console.log('Add task', taskDetail.isCollapsed);
     console.log('propies ', props);
     //console.log('propies detials', taskOrderCode);
@@ -30,7 +56,9 @@ export default function TaskDetailEdit (props) {
             NoOfResource: event.target.elements.NoOfResource.value,
             hour: event.target.elements.hour.value,
             duration: event.target.elements.duration.value,
-            department: event.target.elements.department.value
+            department: event.target.elements.department.value,
+            startDate: event.target.elements.startDate.value, 
+            endDate: event.target.elements.endDate.value, 
         };
     
         addTaskDetail(newTaskDetail);
@@ -46,8 +74,22 @@ export default function TaskDetailEdit (props) {
     return (
       <div >
         {/* //className={`task ${collapsed ? "collapsedTask" : ""}`}> */}
-    
+              <br />  
+          <br />
+
+
         <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
+
+          <label>Enter Department</label>
+          <input
+            type="text"
+           // className="title input"
+            name="department"
+            placeholder="Enter Department"
+            disabled={collapsed}
+            defaultValue={taskDetail.department}
+          />
+
           <input
             type="text"
             //className="title input"
@@ -84,14 +126,32 @@ export default function TaskDetailEdit (props) {
             defaultValue={taskDetail.duration}
           />
 
+          
+          <label>Select Start Date      </label>
+          <input
+            type="date"
+            //className="title input"
+            name="startDate"
+            placeholder="Select Start Date"
+            disabled={collapsed}
+            defaultValue={taskDetail.startDate}
+            onChange={handleChange}
+          />
+          
+          
+          <label>Select End Date             </label>
           <input
             type="text"
-           // className="title input"
-            name="department"
-            placeholder="Enter Department"
+            //className="title input"
+            name="endDate"
+            placeholder="Select End Date"
             disabled={collapsed}
-            defaultValue={taskDetail.department}
+            //value={enddd}
+            defaultValue={enddd}
           />
+          
+          <br />
+          <br />
 
           <button
             onClick={() => {
@@ -99,7 +159,7 @@ export default function TaskDetailEdit (props) {
             }}
             className="button"
           >
-            {collapsed ? "Edit" : "Save"}
+            {collapsed ? "Edit" : "Save Details"}
           </button>
           {collapsed && (
             <button

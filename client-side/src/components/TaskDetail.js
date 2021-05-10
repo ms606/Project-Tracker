@@ -6,12 +6,12 @@ export default function TaskDetail (props) {
     const { addTaskDetail, deleteTaskDetail, taskDetail, taskOrderCode } = props;
     
     //console.log('Add task detail collapsed', taskDetail);
-    //console.log('Delete task detail logging',deleteTaskDetail);
+    console.log('Delete task detail logging',deleteTaskDetail);
 
     const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
     const [formAction, setFormAction] = useState("");
-    const [duration, setDuration] = useState("");
-    const [enddd, setEnddd] = useState("");
+    const [duration,   setDuration]   = useState("");
+    const [enddd,      setEnddd]      = useState("");
     
     //console.log('Add task', taskDetail.isCollapsed);
     //console.log('propies ', props);
@@ -58,7 +58,7 @@ export default function TaskDetail (props) {
             duration: event.target.elements.duration.value,
             department: event.target.elements.department.value,
             startDate: event.target.elements.startDate.value, 
-            endtDate: event.target.elements.endDate.value, 
+            endDate: event.target.elements.endDate.value, 
             //taskOrderCode: taskDetail.taskOrderCode
         };
     
@@ -68,7 +68,8 @@ export default function TaskDetail (props) {
       }
   
       if (formAction === "delete") {
-        deleteTaskDetail(taskDetail.id);
+        console.log('Yeh hai new cheez',taskDetail);
+        deleteTaskDetail(taskDetail);
       }
     }
   
@@ -146,7 +147,7 @@ export default function TaskDetail (props) {
             name="endDate"
             placeholder="Select End Date"
             disabled={collapsed}
-            value={enddd}
+            //value={enddd}
             defaultValue={enddd}
           />
           

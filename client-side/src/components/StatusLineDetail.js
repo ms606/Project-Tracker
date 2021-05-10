@@ -2,7 +2,7 @@ import "../styles/statusLine.scss";
 import Task from "./TaskDetail";
 
 export default function StatusLine(props) {
-  const { status, taskDetail, addTaskDetail, deleteTask, addEmptyTask, taskOrderCode } = props;
+  const { status, taskDetail, addTaskDetail, deleteTaskDetail, addEmptyTask, taskOrderCode } = props;
 
   let taskList, tasksForStatus;
   
@@ -18,7 +18,7 @@ export default function StatusLine(props) {
     });
   }
 
-  //console.log('props status line details',props.tasks.orderCode);
+  // console.log('props status line details',tasks);
   //console.log('taskOrderNoKewl',taskOrderCode);
   //console.log('tasksForStatus',tasksForStatus);
   
@@ -31,7 +31,7 @@ export default function StatusLine(props) {
       return (
         <Task
           addTaskDetail   = {(task) => addTaskDetail(task)}
-          deleteTaskDetail= {(id)   => deleteTask(id)}
+          deleteTaskDetail= {(id)   => deleteTaskDetail(id)}
           key             = {task.id}
           taskDetail      = {task}
           taskOrderCode   = {props.tasks[0].orderCode}
