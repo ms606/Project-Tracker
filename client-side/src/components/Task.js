@@ -29,7 +29,8 @@ export default function Task(props) {
           status: task.status,
           isCollapsed: true,
           expectedShipping: event.target.elements.expectedShipping.value,
-          shipping: event.target.elements.shipping.value
+          shipping: event.target.elements.shipping.value,
+          status_new: event.target.elements.status_new.value
         };        
 
         addTask(newTask);
@@ -75,7 +76,9 @@ export default function Task(props) {
           disabled={collapsed}
           defaultValue={task.machineDet}
         />
+
         <br />
+
         <label>Enter Activity</label>
         <input
           type="text"
@@ -85,7 +88,21 @@ export default function Task(props) {
           disabled={collapsed}
           defaultValue={task.activity}
         />
+
         <br />
+
+        <label>Enter Status</label>
+        <input
+          type="text"
+          className="title input"
+          name="status_new"
+          placeholder="Enter Status"
+          disabled={collapsed}
+          defaultValue={task.status_new}          
+        />
+
+        <br />
+
         <label>Select Expected Shipping</label>
         <input
           type="date"

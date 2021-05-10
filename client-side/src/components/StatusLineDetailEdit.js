@@ -6,7 +6,7 @@ export default function StatusLineDetailEdit(props) {
 
   let taskList, tasksForStatus;
   
-  console.log('fjhadskjfdsjklfhdasljfdsjaklhfljdksaf',props);
+  //console.log('fjhadskjfdsjklfhdasljfdsjaklhfljdksaf',props);
 
   function handleAddEmpty() {
     addEmptyTask(status);

@@ -5,7 +5,6 @@ import "../styles/displayTable.scss";
 import StatusLine from "./StatusLine";
 import StatusLineDetail from "./StatusLineDetail";
 import StatusLineEdit from "./StatusLineEdit";
-import StatusLineDetailEdit from "./StatusLineDetailEdit";
 
 import {
   BrowserRouter as Router,
@@ -104,20 +103,25 @@ function Home() {
         orderCode: "",
         machineDet: "",
         expectedShipping: "",
-        shipping: ""
+        shipping: "",
+        status_new: ""
       },
     ]);
   }
 
   function addTask(taskToAdd) {
 
-    //console.log('taskToAdd puranay tasks 1',tasks);
+    console.log('taskToAdd puranay tasks 1',taskToAdd);
 
-    loadTasksFromLocalStorage();
+     //loadTasksFromLocalStorage();
 
-    let loadedTasks = localStorage.getItem("tasks");
+     //let loadedTasks = localStorage.getItem("tasks");
 
-    let tasks = JSON.parse(loadedTasks);
+     //let tasks = JSON.parse(loadedTasks);
+     let tasks = [];
+     tasks.push(taskToAdd);
+     console.log('after parsing tasks 1',tasks);
+
 
     //console.log('taskToAdd puranay tasks 2',tasks);
     //console.log('taskToAdd',taskToAdd);
@@ -129,9 +133,11 @@ function Home() {
 
     // console.log('filtered list ',filteredTasks);
 
-    let newTaskList = [...filteredTasks, taskToAdd];
+     let newTaskList = [...filteredTasks, taskToAdd];
 
     setTasks(newTaskList);
+
+    //setTasks(taskToAdd);
 
     saveTasksToLocalStorage(newTaskList);
     }
@@ -198,7 +204,9 @@ function Home() {
         duration: "",
         department: "",
         status: status,
-        orderCode: ""
+        orderCode: "",
+        startDate: "",
+        endDate: ""
       },
     ])
 
@@ -332,6 +340,7 @@ function Home() {
               <th>Order Code</th>
               <th>Customer</th> 
               <th>Activity</th>
+              <th>department</th>  
               <th>Urgency</th>
               <th>Machine Detail</th>
               <th>Expected Shipping</th>
@@ -340,7 +349,7 @@ function Home() {
               <th>No Of Resource</th>  
               <th>hour</th>  
               <th>duration</th>  
-              <th>department</th>  
+              
             </thead>
 
             <tbody>
@@ -349,6 +358,7 @@ function Home() {
                     <td>{task.orderCode}</td>
                     <td>{task.customer}</td>
                     <td>{task.activity}</td>
+                    <th>{task.department}</th>                      
                     <td>{task.urgency}</td>
                     <td>{task.machineDet}</td>
                     <td>{task.expectedShipping}</td>
@@ -356,8 +366,7 @@ function Home() {
                     <td>{task.resource}</td>
                     <th>{task.NoOfResource}</th>  
                     <th>{task.hour}</th>  
-                    <th>{task.duration}</th>  
-                    <th>{task.department}</th>                      
+                    <th>{task.duration}</th>                      
                  </tr>                   
                )
                }
