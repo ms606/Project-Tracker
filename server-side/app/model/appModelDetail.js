@@ -7,14 +7,14 @@ var TaskDetail = function(taskDetail){
     this.orderCode    = taskDetail.orderCode;
     this.resource     = taskDetail.resource;
     this.NoOfResource = taskDetail.NoOfResource;
-    this.Hour         = taskDetail.Hour;
+    this.hour         = taskDetail.hour;
     this.duration     = taskDetail.duration;
     this.department   = taskDetail.department;
+    this.startDate    = taskDetail.startDate;
+    this.endDate      = taskDetail.endDate;
 }
 
 TaskDetail.createTaskDetail = function (newTask, result) {    
-         console.log('getting the tasks from params', newTask);
-
         sql.query("INSERT INTO task_detail set ?", newTask, function (err, res) {
                 
                 if(err) {
@@ -57,8 +57,12 @@ TaskDetail.getAllTaskDetail = function (result) {
             });   
 };
 
-TaskDetail.remove = function(id, result){
-     sql.query("DELETE FROM task_detail WHERE orderCode = ?", [id], function (err, res) {
+TaskDetail.remove = function(task, result){
+
+     task = JSON.parse(task);
+
+    console.log([task.orderCode, task.department, task.resource]);
+     sql.query("DELETE FROM task_detail WHERE orderCode in (?) and duration = ? and resource in (?)", [task.orderCode, task.duration. task.resource], function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
@@ -75,19 +79,22 @@ TaskDetail.remove = function(id, result){
 TaskDetail.getTaskEverythingById = function (taskId, result) {
   sql.query(`select orderCode, customer, machineDet, activity, department, resource, urgency, 
    DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , 
-   DATE_FORMAT(shipping, '%d/%m/%Y')  shipping, status,  duration, Hour, NoOfResource
+   DATE_FORMAT(shipping, '%d/%m/%Y')  shipping, status,  duration, Hour, NoOfResource,
+   startDate, endDate, endDate expectedShipping_, null delay
 
 from
 ( 
     
-    select t1.orderCode, t1.customer, t1.activity,  null department, t1.urgency, t1.machineDet, t1.expectedShipping, t1.shipping, t1.status, null resource,  sum(t2.duration)  duration, null Hour, null NoOfResource  		  
+    select t1.orderCode, t1.customer, t1.activity,  null department, t1.urgency, t1.machineDet, t1.expectedShipping, t1.shipping, t1.status, null resource,  sum(t2.duration)  duration, null Hour, null NoOfResource , 
+           null startDate, null endDate 		  
     from   tasks t1, task_detail t2
     where  t1.orderCode = t2.orderCode
     group by t1.orderCode, t1.activity, t1.urgency, t1.machineDet, t1.expectedShipping, t1.shipping, t1.status	
     union all 
     
-    select all orderCode, null customer, null activity, department, null urgency, null machineDet, null expectedShipping, null shipping, null status, resource, duration, Hour, NoOfResource  
-    from  task_detail
+    select all orderCode, null customer, null activity, department, null urgency, null machineDet, null expectedShipping, null shipping, null status, resource, duration, Hour, NoOfResource ,
+           DATE_FORMAT(startDate, '%d/%m/%Y') startDate, DATE_FORMAT(endDate, '%d/%m/%Y')  endDate  
+    from   task_detail
     
 ) t3 
     
