@@ -12,9 +12,29 @@ var TaskDetail = function(taskDetail){
     this.department   = taskDetail.department;
     this.startDate    = taskDetail.startDate;
     this.endDate      = taskDetail.endDate;
+    this.autoId       = taskDetail.autoId;
 }
 
-TaskDetail.createTaskDetail = function (newTask, result) {    
+TaskDetail.createTaskDetail = function (newTask, result) { 
+        
+        if (!!newTask.autoId) {
+            console.log('andar agaya');
+            console.log(newTask);
+           
+            sql.query("DELETE FROM task_detail WHERE autoId = (?)", [newTask.autoId],function(err1,res1){
+//                if(err1) {
+//                    console.log("error: ", err1);
+//                    result(null, err1);
+//                }
+//                else{
+//               
+//                 result(null, res1);
+//                }
+                null;
+            });            
+        };
+     
+    
         sql.query("INSERT INTO task_detail set ?", newTask, function (err, res) {
                 
                 if(err) {
@@ -59,10 +79,10 @@ TaskDetail.getAllTaskDetail = function (result) {
 
 TaskDetail.remove = function(task, result){
 
-     task = JSON.parse(task);
+     //task = JSON.parse(task);
 
-    console.log([task.orderCode, task.department, task.resource]);
-     sql.query("DELETE FROM task_detail WHERE orderCode in (?) and duration = ? and resource in (?)", [task.orderCode, task.duration. task.resource], function (err, res) {
+    console.log(task);
+     sql.query("DELETE FROM task_detail WHERE autoId in (?)", [task], function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
