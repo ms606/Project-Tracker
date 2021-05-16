@@ -144,15 +144,6 @@ function Home() {
 
 
   function deleteTask(taskId) {
-  // console.log('idher phunch gayaaaaa', taskId);
-    const requestOptions = {
-      method: 'DELETE',
-    };
-
-    fetch(`http://localhost:3000/tasks/${taskId}`, requestOptions)
-      .then(response => response.json());
-
-
     let filteredTasks = tasks.filter((task) => {
       return task.id !== taskId;
     });
@@ -160,9 +151,6 @@ function Home() {
     setTasks(filteredTasks);
 
     saveTasksToLocalStorage(filteredTasks);
-
-    window.location.reload();
-
   }
 
 
@@ -218,7 +206,8 @@ function Home() {
         status: status,
         orderCode: "",
         startDate: "",
-        endDate: ""
+        endDate: "",
+        autoId: ""
       },
     ])
 
@@ -240,76 +229,90 @@ function Home() {
   }
 
 
-  function deleteTaskDetail(taskDetail) {
-   
+  // Function deleteDetailTasks
+  function deleteTaskDetail(taskId) {
 
-    console.log('idher restslkjsdakldjjkllsdjsdjfsdlfjlkj', taskDetail);   
+    
+    console.log('idher restslkjsdakldjjkllsdjsdjfsdlfjlkj', (taskId-1));   
 
-    taskDetail = JSON.stringify(taskDetail);
-    console.log('idher phunch poori detail k sath', taskDetail);
+   // taskDetail = JSON.stringify(taskDetail);
+   // console.log('idher phunch poori detail k sath', taskDetail);
   //  taskDetail = taskDetail.substring(1, taskDetail.length-1);
 
      const requestOptions = {
        method: 'DELETE',
        headers: { 'Content-Type': 'application/json' },
-       body: taskDetail
+      // body: JSON.stringify(taskId)
      };
 
-     fetch(`http://localhost:3000/taskDetail/${taskDetail}`, requestOptions)
+     fetch(`http://localhost:3000/taskDetail/${taskId}`, requestOptions)
        .then(response => response.json());
 
+    console.log('deletion wala taskdetail',taskDetail);
 
+    let filteredTasks = taskDetail.filter((task) => {
+      return task.autoId !== taskId;  // jo id ayi hai us ko chor k new array create ker dega 
 
-
-    let filteredTasks = tasks.filter((taskDetail) => {
-      return taskDetail.id !== taskDetail.id;
     });
 
-   setTaskDetail(filteredTasks);
+    setTaskDetail(filteredTasks);
 
-   //saveTaskDetailToLocalStorage(filteredTasks);
+    localStorage.setItem("taskDetail", JSON.stringify(filteredTasks));
 
-   // window.location.reload();
-    
+    //saveTaskDetailToLocalStorage(filteredTasks);
+
+
   }
 
-  // Function for storing task detail
-  
+  // Function for storing task detail  
   function saveTaskDetailToLocalStorage(tasks) {
-    localStorage.setItem("taskDetail", JSON.stringify(tasks));
-
-    console.log('tasks gen ', tasks);
-    console.log('length by len', tasks[tasks.length-1]);
-    //Saving into the database mySql
-    //console.log('saveTaskDetailToLocalStorage', tasks[0]);
-    const orderCode = tasks[tasks.length-1].orderCode;
+     
+    if (tasks.length > 1 ){
+      console.log('task111werwrewwerrerrr')
+      console.log('task111',tasks)
+      const orderCode = tasks[tasks.length-1].orderCode;
+            
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(tasks[tasks.length-1])
+      };
+             
+      var obj; 
+       
+      fetch(`http://localhost:3000/taskDetail/${orderCode}`, requestOptions)
+       .then(response => response.json())
+       .then(data => {
+                      console.log(data);
+                      tasks[tasks.length-1].autoId = data;
+                      taskDetail[taskDetail.length-1].autoId = data;
+                      localStorage.setItem("taskDetail", JSON.stringify(tasks)); 
+                      } );                       
+  }
+    else {
+      console.log('task111')
+    console.log('task111',tasks)
+    const orderCode = tasks[0].orderCode;
    
-    console.log('Order code kya hai ', orderCode);
-    console.log('length tasks',tasks.length);
-
-    tasks = tasks[tasks.length - 1];
-    //if ((tasks[tasks.length-1]) > 0 ){
-      //tasks = JSON.stringify(tasks[tasks.length-1]);
-      //console.log('JSON.stringify', JSON.stringify(tasks[tasks.length-1]));
-    //}
-    //else {
-      tasks = JSON.stringify(tasks);
-      console.log('JSON.stringify', JSON.stringify(tasks));
-    //}
-
-    //tasks = tasks.substring(1, tasks.length-1);
-
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: tasks
+      body: JSON.stringify(tasks[0])
     };
+    
+    var obj; 
 
     fetch(`http://localhost:3000/taskDetail/${orderCode}`, requestOptions)
-     .then(response => response.json());    
-  }
+     .then(response => response.json())
+     .then(data => {
+                    console.log(data);
+                    tasks[tasks.length-1].autoId = data;
+                    taskDetail[taskDetail.length-1].autoId = data;
+                    localStorage.setItem("taskDetail", JSON.stringify(tasks)); 
+                  } );                       
 
-  // console.log('tasks lala12',tasks)
+    }    
+  }
 
   return (
     <div className="App">
@@ -389,15 +392,13 @@ function Home() {
               <th>department</th>  
               <th>Urgency</th>
               <th>Machine Detail</th>
+              <th>Expected Shipping</th>
+              <th>Shipping</th>              
               <th>Resource</th>  
               <th>No Of Resource</th>  
               <th>hour</th>  
               <th>duration</th>  
-              <th>Start Date</th>  
-              <th>End Date</th>  
-              <th>Expected Shipping</th>
-              <th>Shipping</th>              
-              <th>Delay</th>   
+              
             </thead>
 
             <tbody>
@@ -409,16 +410,12 @@ function Home() {
                     <th>{task.department}</th>                      
                     <td>{task.urgency}</td>
                     <td>{task.machineDet}</td>
+                    <td>{task.expectedShipping}</td>
+                    <td>{task.shipping}</td>
                     <td>{task.resource}</td>
                     <th>{task.NoOfResource}</th>  
                     <th>{task.hour}</th>  
                     <th>{task.duration}</th>                      
-                    <th>{task.startDate}</th>                      
-                    <th>{task.endDate}</th>                      
-                    <td>{task.expectedShipping}</td>
-                    <td>{task.shipping}</td>
-                    <td>{task.delay}</td>
-                    
                  </tr>                   
                )
                }
@@ -494,14 +491,19 @@ function Edit(){
     saveTasksToLocalStorage(newTaskList);
   }
 
-  function deleteTask(taskId) {
+  function deleteTaskEdit(taskId) {
 
-     const requestOptions = {
+    console.log('deletion wala taskdetail',taskId);
+
+    const requestOptions = {
       method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
     };
 
     fetch(`http://localhost:3000/tasks/${taskId}`, requestOptions)
       .then(response => response.json());
+
+   
 
 
     let filteredTasks = tasks.filter((task) => {
@@ -567,7 +569,8 @@ function Edit(){
         status: status,
         orderCode: "",
         startDate: "",
-        endDate: ""
+        endDate: "",
+        autoId: ""
       },
     ])
 
@@ -636,7 +639,7 @@ function Edit(){
             tasks={tasks}
             addEmptyTask={addEmptyTask}
             addTask={addTask}
-            deleteTask={deleteTask}
+            deleteTaskEdit={deleteTaskEdit}
             status="Edit Task"
           />
 

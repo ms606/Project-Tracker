@@ -4,7 +4,7 @@ import StatusLineDetailEdit from "./StatusLineDetailEdit";
 
 
 export default function Task(props) {
-  const { addTask, deleteTask, task } = props;
+  const { addTask, deleteTaskEdit, task } = props;
 
   
   const [tasks, setTasks] = useState([]);
@@ -12,7 +12,7 @@ export default function Task(props) {
 
 
   const [urgencyLevel, setUrgencyLevel] = useState(task.urgency);
-  const [collapsed,    setCollapsed   ] = useState(task.isCollapsed);
+  const [collapsed,    setCollapsed   ] = useState(true);
   const [formAction,   setFormAction  ] = useState("");
 
   useEffect(() => {
@@ -45,10 +45,10 @@ export default function Task(props) {
           customer:   event.target.elements.customer.value,
           urgency: urgencyLevel,
           status: task.status,
-          isCollapsed: true,
+          collapsed: true,
           expectedShipping: event.target.elements.expectedShipping.value,
           shipping: event.target.elements.shipping.value,
-          status_new: event.target.elements.status_new.value
+          autoId: task.autoId
         };
         //console.log(event);
 
@@ -58,7 +58,8 @@ export default function Task(props) {
     }
 
     if (formAction === "delete") {
-      deleteTask(task.id);
+      deleteTaskEdit(tasks.orderCode);
+      window.location.reload(false);
     }
   }
 
@@ -179,21 +180,7 @@ function saveTaskDetailToLocalStorage(tasks) {
           disabled={collapsed}
           defaultValue={task.activity}
         />
-
-         <br />
-
-        <label>Enter Status</label>
-        <input
-          type="text"
-          className="title input"
-          name="status_new"
-          placeholder="Enter Status"
-          disabled={collapsed}
-          defaultValue={task.status_new}          
-        />
-        
         <br />
-
         
         <label>Select Expected Shipping</label>
         <input

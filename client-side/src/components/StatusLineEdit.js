@@ -2,7 +2,7 @@ import "../styles/statusLineEdit.scss";
 import Task from "./TaskEdit";
 
 export default function StatusLineEdit(props) {
-  const { status, tasks, addTask, deleteTask, addEmptyTask, moveTask } = props;
+  const { status, tasks, addTask, deleteTaskEdit, addEmptyTask, moveTask } = props;
 
   let taskList, tasksForStatus;
 
@@ -25,9 +25,9 @@ export default function StatusLineEdit(props) {
       return (
         <Task
           addTask={(task) => addTask(task)}
-          deleteTask={(id) => deleteTask(id)}
+          deleteTaskEdit={(id) => deleteTaskEdit(id)}
           moveTask={(id, status) => moveTask(id, status)}
-          key={task.id}
+          key={task.autoId}
           task={task}
         />
       );

@@ -6,12 +6,12 @@ export default function TaskDetail (props) {
     const { addTaskDetail, deleteTaskDetail, taskDetail, taskOrderCode } = props;
     
     //console.log('Add task detail collapsed', taskDetail);
-    console.log('Delete task detail logging',deleteTaskDetail);
+    //console.log('Delete task detail logging',deleteTaskDetail);
 
     const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
     const [formAction, setFormAction] = useState("");
-    const [duration,   setDuration]   = useState("");
-    const [enddd,      setEnddd]      = useState("");
+    const [duration, setDuration] = useState("");
+    const [enddd, setEnddd] = useState("");
     
     //console.log('Add task', taskDetail.isCollapsed);
     //console.log('propies ', props);
@@ -20,6 +20,7 @@ export default function TaskDetail (props) {
     function handleChangeDur(e){
       setDuration(e.target.value);
     }
+
 
     function handleChange(e){
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -38,6 +39,7 @@ export default function TaskDetail (props) {
       setEnddd(moment(d).format('DD-MMM-YYYY'));
 
     }
+
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -59,6 +61,7 @@ export default function TaskDetail (props) {
             department: event.target.elements.department.value,
             startDate: event.target.elements.startDate.value, 
             endDate: event.target.elements.endDate.value, 
+            autoId: taskDetail.autoId
             //taskOrderCode: taskDetail.taskOrderCode
         };
     
@@ -68,8 +71,7 @@ export default function TaskDetail (props) {
       }
   
       if (formAction === "delete") {
-        console.log('Yeh hai new cheez',taskDetail);
-        deleteTaskDetail(taskDetail);
+        deleteTaskDetail(taskDetail.autoId);
       }
     }
   
