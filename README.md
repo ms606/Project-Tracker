@@ -7,3 +7,5 @@
 4. Then go in server-side in the root folder and open CMD and run npm start.
 5. Go in client-side  root folder and open CMD and run npm start.
 
+use this link for making tests
+https://www.smashingmagazine.com/2020/06/practical-guide-testing-react-applications-jest/
