@@ -9,3 +9,5 @@
 
 use this link for making tests
 https://www.smashingmagazine.com/2020/06/practical-guide-testing-react-applications-jest/
+
+https://www.emgoto.com/enzyme-shallow/
