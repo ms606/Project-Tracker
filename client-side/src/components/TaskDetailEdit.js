@@ -30,7 +30,8 @@ export default function TaskDetailEdit (props) {
             NoOfResource: event.target.elements.NoOfResource.value,
             hour: event.target.elements.hour.value,
             duration: event.target.elements.duration.value,
-            department: event.target.elements.department.value
+            department: event.target.elements.department.value,
+            autoId: taskDetail.autoId
         };
     
         addTaskDetail(newTaskDetail);
@@ -48,9 +49,19 @@ export default function TaskDetailEdit (props) {
         {/* //className={`task ${collapsed ? "collapsedTask" : ""}`}> */}
     
         <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
+
+           <input
+            type="text"
+            className="title input"
+            name="department"
+            placeholder="Enter Department"
+            disabled={collapsed}
+            defaultValue={taskDetail.department}
+          />        
+
           <input
             type="text"
-            //className="title input"
+            className="title input"
             name="resource"
             placeholder="Enter Resource."
             disabled={collapsed}
@@ -59,7 +70,7 @@ export default function TaskDetailEdit (props) {
 
           <input
             type="text"
-            //className="title input"
+            className="title input"
             name="NoOfResource"
             placeholder="Number Of Resource "
             disabled={collapsed}
@@ -68,7 +79,7 @@ export default function TaskDetailEdit (props) {
 
           <input
             type="text"
-           // className="title input"
+            className="title input"
             name="hour"
             placeholder="Enter Hour"
             disabled={collapsed}
@@ -77,21 +88,14 @@ export default function TaskDetailEdit (props) {
           
           <input
             type="number"
-           // className="title input"
+            className="title input"
             name="duration"
             placeholder="Enter Duration"
             disabled={collapsed}
             defaultValue={taskDetail.duration}
           />
 
-          <input
-            type="text"
-           // className="title input"
-            name="department"
-            placeholder="Enter Department"
-            disabled={collapsed}
-            defaultValue={taskDetail.department}
-          />
+         
 
           <button
             onClick={() => {
@@ -101,6 +105,11 @@ export default function TaskDetailEdit (props) {
           >
             {collapsed ? "Edit" : "Save"}
           </button>
+          <hr />
+          <hr />
+          <hr />
+
+
           {collapsed && (
             <button
               onClick={() => {
@@ -110,6 +119,9 @@ export default function TaskDetailEdit (props) {
             >
               X
             </button>
+
+          
+
           )}
         </form>
       </div>
