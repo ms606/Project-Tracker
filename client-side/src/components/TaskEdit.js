@@ -58,8 +58,11 @@ export default function Task(props) {
     }
 
     if (formAction === "delete") {
+
+      //console.log('delete honay ja raha hai',tasks);
+
       deleteTaskEdit(tasks.orderCode);
-      window.location.reload(false);
+      //window.location.reload(false);
     }
   }
 
@@ -73,7 +76,7 @@ export default function Task(props) {
 // All details regarding status line detail edit 
 
 
-console.log('checking on every step', taskDetail)
+//console.log('checking on every step', taskDetail)
 
 // Function for adding task details 
 function addEmptyTaskDetail(status) {
@@ -99,7 +102,7 @@ function addEmptyTaskDetail(status) {
   ])  
 }
 
-console.log('taskdetail',taskDetail);
+//console.log('taskdetail',taskDetail);
 
 
 // Function for second table 
@@ -263,7 +266,7 @@ function saveTaskDetailToLocalStorage(tasks) {
             addTaskDetail={addTaskDetail}
             // deleteTask={deleteTask}
             status="Create Task Activites"              
-            tasks={tasks}
+            taskOrderCode={task.orderCode}
           />            
 
     </div>

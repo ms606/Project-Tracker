@@ -1,17 +1,61 @@
 import { useState } from "react";
 
 export default function TaskDetailEdit (props) {
-    const { addTaskDetail, deleteTaskDetail, taskDetail, taskOrderCode } = props;
+    const { deleteTaskDetailEdit, taskDetail, taskOrderCode } = props;
     
-    //console.log('Add task detail collapsed', taskDetail);
-    //console.log('Delete task detail logging',deleteTaskDetail);
-
+    //console.log('Add task detail', taskDetail);
+    
     const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
     const [formAction, setFormAction] = useState("");
     
-    //console.log('Add task', taskDetail.isCollapsed);
-    console.log('propies ', props);
-    //console.log('propies detials', taskOrderCode);
+    
+    //console.log('propies ', props);
+    
+  
+
+    function addTaskDetailEdit(taskToAdd) {  
+
+      // let filteredTasks = taskDetail.filter((task) => {
+      //   return task.id !== taskToAdd.id;
+      // });
+  
+      // let newTaskList = [...filteredTasks, taskToAdd];
+  
+      // setTaskDetail(newTaskList);
+    console.log('hai kya isme',taskToAdd);
+      saveTaskDetailEditToLocalStorage(taskToAdd);
+    }
+
+
+    function saveTaskDetailEditToLocalStorage(tasks) {
+      localStorage.setItem("taskDetail", JSON.stringify(tasks));
+  
+      //const orderCode = tasks[tasks.length-1].orderCode;
+  
+      //tasks = tasks[tasks.length - 1];
+      //if ((tasks[tasks.length-1]) > 0 ){
+        //tasks = JSON.stringify(tasks[tasks.length-1]);
+        //console.log('JSON.stringify', JSON.stringify(tasks[tasks.length-1]));
+      //}
+      //else {
+        tasks = JSON.stringify(tasks);
+       // console.log('JSON.stringify', JSON.stringify(tasks));
+      //}
+  
+      //tasks = tasks.substring(1, tasks.length-1);
+  
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: tasks
+      };
+  
+      fetch(`http://localhost:3000/taskDetail/${taskOrderCode}`, requestOptions)
+       .then(response => response.json());    
+    }
+
+    
+
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -34,13 +78,13 @@ export default function TaskDetailEdit (props) {
             autoId: taskDetail.autoId
         };
     
-        addTaskDetail(newTaskDetail);
+        addTaskDetailEdit(newTaskDetail);
         setCollapsed(true);
         }
       }
   
       if (formAction === "delete") {
-        deleteTaskDetail(taskDetail.id);
+        deleteTaskDetailEdit(taskDetail.id);
       }
     }
   

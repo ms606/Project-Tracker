@@ -357,23 +357,11 @@ function Home() {
   
 
      async componentDidMount() {
-    //   Promise.all([
-    //     fetch("http://localhost:3000/taskEverything")
-    //      .then(res => res.json())        
-    //   ]).then(([urlOneData]) => {
-    //     this.setState({ apiResponse: urlOneData })
-    //   });
-
       const response = await fetch("http://localhost:3000/taskEverything/1");
       const json = await response.json();
       this.setState({ apiResponse: json });
-
-
      }
 
-      //  const response = await fetch("http://localhost:3000/taskEverything");
-      //  const json = await response.json();
-      //  this.setState({ apiResponse: json });      
   
 
     render() {
@@ -510,9 +498,9 @@ function Edit(){
       return task.id !== taskId;
     });
 
-    setTasks(filteredTasks);
+   // setTasks(filteredTasks);
 
-    saveTasksToLocalStorage(filteredTasks);
+   // saveTasksToLocalStorage(filteredTasks);
   }
 
     function saveTasksToLocalStorage(tasks) {
@@ -547,6 +535,8 @@ function Edit(){
   }
 
 
+  
+
 
   // Function for adding task details 
   function addEmptyTaskDetail(status) {
@@ -580,17 +570,17 @@ function Edit(){
 
 
   // Function for second table 
-  function addTaskDetail(taskToAdd) {  
-    let filteredTasks = taskDetail.filter((task) => {
-      return task.id !== taskToAdd.id;
-    });
+  // function addTaskDetail(taskToAdd) {  
+  //   let filteredTasks = taskDetail.filter((task) => {
+  //     return task.id !== taskToAdd.id;
+  //   });
 
-    let newTaskList = [...filteredTasks, taskToAdd];
+  //   let newTaskList = [...filteredTasks, taskToAdd];
 
-    setTaskDetail(newTaskList);
+  //   setTaskDetail(newTaskList);
 
-    saveTaskDetailToLocalStorage(newTaskList);
-  }
+  //   saveTaskDetailToLocalStorage(newTaskList);
+  // }
 
   // Function for storing task detail
   

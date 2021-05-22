@@ -24,13 +24,13 @@ export default function StatusLineDetailEdit(props) {
 
   //console.log('props status line details',props);
   //console.log('taskOrderNoKewl',taskOrderCode);
-  //console.log('tasksForStatus',tasksForStatus);
+ // console.log('tasksForStatus',tasksForStatus);
   
   if (tasksForStatus) {
 
     taskList = tasksForStatus.map((task) => {
 
-      console.log('Loop understanding here..', task)  ;
+      //console.log('Loop understanding here..', task)  ;
       //console.log('Loop understanding here.. 1', (id))  ;
       //console.log('Loop understanding here.. 2', task.id)  ;
       return (
@@ -39,6 +39,7 @@ export default function StatusLineDetailEdit(props) {
           deleteTaskDetail= {(id)   => deleteTask(id)}
           key             = {task.autoid}
           taskDetail      = {task}
+          taskOrderCode   = {taskOrderCode}
          // taskOrderCode   = {props.tasks[0].orderCode}
         />
       );
