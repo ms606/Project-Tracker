@@ -1,4 +1,4 @@
-import "../styles/statusLine.scss";
+import "../styles/statusLineEdit.scss";
 import Task from "./TaskDetailEdit";
 
 export default function StatusLineDetailEdit(props) {
@@ -30,14 +30,14 @@ export default function StatusLineDetailEdit(props) {
 
     taskList = tasksForStatus.map((task) => {
 
-      //console.log('Loop understanding here..', task)  ;
-      //console.log('Loop understanding here.. 1', (id))  ;
-      //console.log('Loop understanding here.. 2', task.id)  ;
+      console.log('task testing', task)
+      
       return (
+ 
         <Task
           addTaskDetail   = {(task) => addTaskDetail(task)}
           deleteTaskDetail= {(id)   => deleteTask(id)}
-          key             = {task.autoid}
+          key             = {task.autoId}
           taskDetail      = {task}
           taskOrderCode   = {taskOrderCode}
          // taskOrderCode   = {props.tasks[0].orderCode}

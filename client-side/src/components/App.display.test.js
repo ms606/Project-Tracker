@@ -1,82 +1,28 @@
-import "../styles/taskDetail.scss";
-import { useState } from "react";
-import moment from "moment";
-
-export default function TaskDetail (props) {
-    const { addTaskDetail, deleteTaskDetail, taskDetail, taskOrderCode } = props;
-    
-    //console.log('Add task detail collapsed', taskDetail);
-    //console.log('Delete task detail logging',deleteTaskDetail);
-
-    const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
-    const [formAction, setFormAction] = useState("");
-    const [duration, setDuration] = useState("");
-    const [enddd, setEnddd] = useState("");
-    
-    //console.log('Add task', taskDetail.isCollapsed);
-    //console.log('propies ', props);
-    //console.log('propies detials', taskOrderCode);
-
-    function handleChangeDur(e){
-      setDuration(e.target.value);
-    }
+import React from "react";
+import { shallow, mount } from "enzyme";
+import TaskDetail from "./TaskDetail";
+import Adapter from "./setuptests";
 
 
-    function handleChange(e){
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      var date = new Date(e.target.value ) ;
-
-      var d  = new Date(date);
-
-      d.setDate(date.getDate() + parseInt(duration));
-      
-      console.log(moment(d).format('DD-MMM-YYYY'));     
-
-      console.log(duration);     
-
-      taskDetail.endDate = moment(d).format('DD-MMM-YYYY');
-
-      setEnddd(moment(d).format('DD-MMM-YYYY'));
-
-    }
+import {
+  BrowserRouter as Router,
+  Switch, 
+  Route,
+  Link,
+} from "react-router-dom";
 
 
-    function handleSubmit(event) {
-      event.preventDefault();
-  
-      if (formAction === "save") {
-        if (collapsed) {
-          setCollapsed(false);
-        } else {
-        
-        let newTaskDetail = {
-            id: taskDetail.id,
-            orderCode: taskOrderCode,
-            isCollapsed: true,
-            status: taskDetail.status,
-            resource: event.target.elements.resource.value,
-            NoOfResource: event.target.elements.NoOfResource.value,
-            hour: event.target.elements.hour.value,
-            duration: event.target.elements.duration.value,
-            department: event.target.elements.department.value,
-            startDate: event.target.elements.startDate.value, 
-            endDate: event.target.elements.endDate.value, 
-            autoId: taskDetail.autoId
-            //taskOrderCode: taskDetail.taskOrderCode
-        };
-    
-        addTaskDetail(newTaskDetail);
-        setCollapsed(true);
-        }
-      }
-  
-      if (formAction === "delete") {
-        deleteTaskDetail(taskDetail.autoId);
-      }
-    }
-  
-    return (
-      <div >
+it("renders without crashing", () => {
+  shallow(<TaskDetail />);
+});
+
+it("renders Account header", () => {
+  const wrapper = shallow(<TaskDetail />);
+
+  console.log(wrapper.debug);
+
+
+  const welcome =   <div >
         {/* //className={`task ${collapsed ? "collapsedTask" : ""}`}> */}
     
         <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
@@ -130,7 +76,6 @@ export default function TaskDetail (props) {
           />
 
           <br />
-          
           <label>Select Start Date      </label>
           <input
             type="date"
@@ -175,6 +120,11 @@ export default function TaskDetail (props) {
             </button>
           )}
         </form>
-      </div>
-    );
-}
+      </div> 
+
+  expect(wrapper.contains(welcome)).toEqual(true);
+
+   //expect(welcome).toBeCalledWith(expect.anything());
+
+  //expect(wrapper.contains(welcome)).expect.anything();
+});

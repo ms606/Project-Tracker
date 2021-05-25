@@ -18,11 +18,21 @@ it("renders without crashing", () => {
 
 it("renders Account header", () => {
   const wrapper = shallow(<App />);
-  const welcome =  <li>
+
+  console.log(wrapper);
+
+
+  const welcome = <ul>
+		            <li>
 		              <Link to="/display" className="linkdesign">Display</Link>
 		              <Link to="/edit" className="linkdesign">Edit</Link>
 		              <Link to="/" className="linkdesign">Home</Link>
-		           </li>    ;
+		            </li>    
+		          </ul>   
 
   expect(wrapper.contains(welcome)).toEqual(true);
+
+   //expect(welcome).toBeCalledWith(expect.anything());
+
+  //expect(wrapper.contains(welcome)).expect.anything();
 });

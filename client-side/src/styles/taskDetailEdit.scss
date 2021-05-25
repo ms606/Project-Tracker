@@ -1,0 +1,52 @@
+@import "properties.scss";
+
+
+form {
+   //display: flex;
+   //flex-direction: column;
+   //text-align: center;
+   align-items: center;
+   margin: 0 0.25rem;
+ 
+   .input {
+     background-color: white;
+     border: 1px solid;
+     color: $black;
+     text-align: center;
+     resize: none;
+     //display: flex;
+     font-family: "Kanit", sans-serif;
+
+
+     &:hover {
+       cursor: pointer;
+       border: 1px solid $white;
+     }
+
+     &:focus {
+       outline: none;
+       border-color: $gold;
+       color: $black;
+     }
+
+     &::placeholder {
+       color: $black;
+     }
+   }
+
+   .button {
+    padding: 0.025rem 0.5rem;
+
+  }
+
+  &:hover .button {
+    display: inline-block;
+  }
+
+  .title input  {
+    padding: 1rem;
+    background-color: yellow;
+    
+  }
+
+}

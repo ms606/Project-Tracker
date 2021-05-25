@@ -38,18 +38,17 @@ export default function Task(props) {
         setCollapsed(false);
       } else {
         let newTask = {
-          id: task.id,
+          id: 1,
           orderCode:  event.target.elements.orderCode.value,
           machineDet: event.target.elements.machineDet.value,
           activity:   event.target.elements.activity.value,
           customer:   event.target.elements.customer.value,
           urgency: urgencyLevel,
-          status: task.status,
+          status: 'Create task',
           collapsed: true,
           expectedShipping: event.target.elements.expectedShipping.value,
           shipping: event.target.elements.shipping.value,
-          autoId: task.autoId
-        };
+          };
         //console.log(event);
 
         addTask(newTask);
@@ -66,15 +65,24 @@ export default function Task(props) {
     }
   }
 
+
+// All details regarding status line detail edit 
+
 // Function for adding task details 
 function addEmptyTaskDetail(status) {
-  const lastTask = taskDetail[taskDetail.length - 1];
+
+  console.log('what is taskdetail here ', taskDetail)
+  const lastTask = taskDetail.length;
+
+  console.log('what is last track here ', lastTask)
 
   let newTaskId = 1;
 
   if (lastTask !== undefined) {
-    newTaskId = lastTask.id + 1;
+    newTaskId = lastTask + 1;
   }
+
+  console.log('what is newTaskId ', newTaskId)
 
   setTaskDetail((taskDetail) => [
     ...taskDetail,
@@ -85,7 +93,8 @@ function addEmptyTaskDetail(status) {
       duration: "",
       department: "",
       status: status,
-      orderCode: ""
+      orderCode: "",
+      autoId: ""
     },
   ])  
 }
@@ -127,9 +136,6 @@ function saveTaskDetailToLocalStorage(tasks) {
   fetch(`http://localhost:3000/taskDetail/${orderCode}`, requestOptions)
    .then(response => response.json());    
 }
-
-
-   console.log('task testing', task)
   return (
      <div className={`task ${collapsed ? "collapsedTask" : ""}`}>
         <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}> 

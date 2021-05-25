@@ -1,11 +1,12 @@
 import { useState } from "react";
+import "../styles/taskDetailEdit.scss";
 
 export default function TaskDetailEdit (props) {
-    const { deleteTaskDetailEdit, taskDetail, taskOrderCode } = props;
+    const { taskDetail, taskOrderCode } = props;
     
-    //console.log('Add task detail', taskDetail);
+    console.log('Add task detail', taskDetail);
     
-    const [collapsed,  setCollapsed ] = useState(taskDetail.isCollapsed);
+    const [collapsed,  setCollapsed ] = useState(true);
     const [formAction, setFormAction] = useState("");
     
     
@@ -22,7 +23,7 @@ export default function TaskDetailEdit (props) {
       // let newTaskList = [...filteredTasks, taskToAdd];
   
       // setTaskDetail(newTaskList);
-    console.log('hai kya isme',taskToAdd);
+      //console.log('hai kya isme',taskToAdd);
       saveTaskDetailEditToLocalStorage(taskToAdd);
     }
 
@@ -55,6 +56,20 @@ export default function TaskDetailEdit (props) {
     }
 
     
+    function deleteTaskDetailEdit(autoId) {
+
+      console.log('deletion wala taskdetail',autoId);
+  
+      const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      };
+  
+      fetch(`http://localhost:3000/taskDetail/${autoId}`, requestOptions)
+        .then(response => response.json())
+        .then(window.location.reload(false));      
+      };
+
 
 
     function handleSubmit(event) {
@@ -84,7 +99,7 @@ export default function TaskDetailEdit (props) {
       }
   
       if (formAction === "delete") {
-        deleteTaskDetailEdit(taskDetail.id);
+        deleteTaskDetailEdit(taskDetail.autoId);
       }
     }
   

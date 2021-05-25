@@ -2,13 +2,13 @@ import "../styles/statusLineEdit.scss";
 import Task from "./TaskEdit";
 
 export default function StatusLineEdit(props) {
-  const { status, tasks, addTask, deleteTaskEdit, addEmptyTask, moveTask } = props;
+  const { status, tasks, addTask, deleteTaskEdit, moveTask } = props;
 
   let taskList, tasksForStatus;
 
-  function handleAddEmpty() {
-    addEmptyTask(status);
-  }
+  // function handleAddEmpty() {
+  //   addEmptyTask(status);
+  // }
 
 
 //   if (tasks) {
@@ -17,7 +17,7 @@ export default function StatusLineEdit(props) {
 //     });
 //   }
 
-    console.log(tasks);
+    //console.log(tasks);
      tasksForStatus = tasks ;
 
   if (tasksForStatus) {
@@ -27,7 +27,7 @@ export default function StatusLineEdit(props) {
           addTask={(task) => addTask(task)}
           deleteTaskEdit={(id) => deleteTaskEdit(id)}
           moveTask={(id, status) => moveTask(id, status)}
-          key={task.autoId}
+          key= {task.orderCode}
           task={task}
         />
       );

@@ -59,10 +59,10 @@
 
     .title {
       margin-bottom: 0.5rem;
-      padding: 0.5rem 0;
+      padding: 0.5rem 1rem;
       width: 20%;
       font-size: .8rem;
-
+     
       &:hover {
         cursor: text;
       }
@@ -151,6 +151,7 @@
 
       .title {
         margin: 0;
+        padding: 0rem .5rem;
 
         &:hover {
           border-color: transparent;
