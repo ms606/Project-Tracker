@@ -2,8 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "../styles/App.scss";
 import "../styles/displayTable.scss";
-import StatusLine from "./StatusLine";
-import StatusLineDetail from "./StatusLineDetail";
+
 
 
 import Home from './AppHome'

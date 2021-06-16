@@ -2,27 +2,20 @@ import React from "react";
 
  // To change displays
  class Display extends React.Component{
-
     constructor(props) {
         super(props);
         this.state = { apiResponse: [] };
       }
-    
-  
-       async componentDidMount() {
+
+      async componentDidMount() {
         const response = await fetch("http://localhost:3000/taskEverything/1");
         const json = await response.json();
         this.setState({ apiResponse: json });
        }
   
-    
-  
       render() {
-        
         const Arr = [];
-  
         Arr.push(this.state.apiResponse);
-        
         return (
               <div>
                  <table>
@@ -39,7 +32,6 @@ import React from "react";
                 <th>No Of Resource</th>  
                 <th>hour</th>  
                 <th>duration</th>  
-                
               </thead>
   
               <tbody>

@@ -111,7 +111,10 @@ function addTaskDetail(taskToAdd) {
 
   let newTaskList = [...filteredTasks, taskToAdd];
 
-  setTaskDetail(newTaskList);
+  
+  
+  
+  (newTaskList);
 
   saveTaskDetailToLocalStorage(newTaskList);
 }

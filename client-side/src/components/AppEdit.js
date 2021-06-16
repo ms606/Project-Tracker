@@ -83,7 +83,7 @@ function Edit(){
           .then( fetch(`http://localhost:3000/tasks`, requestOptions)
                  .then(response => response.json()));  
   
-                 console.log('yahan check kero tasks2222222', tasks[0])
+             //    console.log('yahan check kero tasks2222222', tasks[0])
       
   
   
@@ -165,6 +165,13 @@ function Edit(){
       setTaskDetail(newTaskList);
   
       saveTaskDetailToLocalStorage(newTaskList);
+    }
+
+
+
+    function saveTaskDetailToLocalStorage(tasks){
+      localStorage.setItem("taskDetail", JSON.stringify(tasks));
+
     }
   
     // Function for storing task detail
