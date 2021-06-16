@@ -22,14 +22,6 @@ TaskDetail.createTaskDetail = function (newTask, result) {
             console.log(newTask);
            
             sql.query("DELETE FROM task_detail WHERE autoId = (?)", [newTask.autoId],function(err1,res1){
-//                if(err1) {
-//                    console.log("error: ", err1);
-//                    result(null, err1);
-//                }
-//                else{
-//               
-//                 result(null, res1);
-//                }
                 null;
             });            
         };

@@ -30,7 +30,11 @@ Task.createTask = function (newTask, result) {
             });           
 };
 
-Task.getTaskById = function (taskId, result) {        sql.query("Select orderCode, customer, machineDet, activity, urgency, status_new, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y')  shipping from tasks where id = ? ", taskId, function (err, res) {             
+Task.getTaskById = function (taskId, result) { 
+        sql.query(`Select orderCode, customer, machineDet, activity, urgency, status_new, 
+                    DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , 
+                    DATE_FORMAT(shipping, '%d/%m/%Y')  shipping from tasks where id = ? `, 
+                   taskId, function (err, res) {             
                 if(err) {
                     console.log("error: ", err);
                     result(err, null);
@@ -71,42 +75,18 @@ Task.updateById = function(id, task, result){
 };
 
 Task.remove = function(id, result){
-     sql.query("DELETE FROM tasks WHERE orderCode = ?", [id], function (err, res) {
+     console.log('aaa');
+     console.log(id);
+     sql.query("DELETE FROM tasks WHERE orderCode in (?)", [id], function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
                     result(null, err);
                 }
                 else{
-               
-                 result(null, res);
+                    result(null, res);
                 }
             }); 
 };
 
-
 module.exports = Task;
-
-
-//JSON PASSING API, PUT REQUEST localhost:3000/tasks
-// {
-// "id" : "6",
-// "task":"create repofafaffaf",
-// "status":"1",
-// "title" : "haha tus titttlees",
-// "urgency": "high",
-// "machineDet": "fsdsdfgfsdgdf",
-// "expectedShipping": "2021-05-27",
-// "Shipping": "2022-05-27"
-// }
-
-
-//JSON PASSING API, PUT REQUEST localhost:3000/taskDetail/123321
-// {
-// "orderCode": "2321",
-// "resource" : "kamehamehaa",
-// "NoOfResource": "52",
-// "hour": "12",
-// "duration": "12",
-// "department": "12"
-// }
