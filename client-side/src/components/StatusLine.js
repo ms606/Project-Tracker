@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "../styles/statusLine.scss";
-import Task from "./Task";
+import Task from "../screens/Task";
 
 export default function StatusLine(props) {
   const { status, tasks, addTask, deleteTask, addEmptyTask } = props;

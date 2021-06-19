@@ -1,5 +1,5 @@
 import "../styles/statusLineEdit.scss";
-import Task from "./TaskDetailEdit";
+import Task from "../screens/TaskDetailEdit";
 
 export default function StatusLineDetailEdit(props) {
   const { status, taskDetail, addTaskDetail, deleteTask, addEmptyTask, taskOrderCode } = props;
