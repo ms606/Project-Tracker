@@ -47,7 +47,7 @@ Task.getTaskById = function (taskId, result) {
 };
 
 Task.getAllTask = function (result) {
-        sql.query("Select orderCode, customer, machineDet, activity, status_new, urgency, DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , DATE_FORMAT(shipping, '%d/%m/%Y') shipping from tasks", function (err, res) {
+        sql.query("Select orderCode, customer, machineDet, activity, status_new, urgency, DATE_FORMAT(expectedShipping, '%Y-%m-%d') expectedShipping , DATE_FORMAT(shipping, '%Y-%m-%d') shipping from tasks", function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
