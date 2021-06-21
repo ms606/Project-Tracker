@@ -2,7 +2,7 @@ import "../styles/statusLineEdit.scss";
 import Task from "../screens/TaskEdit";
 
 export default function StatusLineEdit(props) {
-  const { status, tasks, addTask, deleteTaskEdit, moveTask } = props;
+  const { status, tasks, updateTask, deleteTaskEdit, moveTask } = props;
 
   let taskList, tasksForStatus;
 
@@ -24,7 +24,7 @@ export default function StatusLineEdit(props) {
     taskList = tasksForStatus.map((task) => {
       return (
         <Task
-          addTask={(task) => addTask(task)}
+          updateTask={(task) => updateTask(task)}
           deleteTaskEdit={(id) => deleteTaskEdit(id)}
           moveTask={(id, status) => moveTask(id, status)}
           key= {task.orderCode}

@@ -18,16 +18,16 @@ function Edit(){
     }, []);
   
   
-    function addTaskEdit(taskToAdd) {
-      let filteredTasks = tasks.filter((task) => {
-        return task.id !== taskToAdd.id;
-      });
+    function updateTask(taskToAdd) {
+      // let filteredTasks = tasks.filter((task) => {
+      //   return task.orderCode !== taskToAdd.orderCode;
+      // });
   
-      let newTaskList = [...filteredTasks, taskToAdd];
+      // let newTaskList = [...filteredTasks, taskToAdd];
   
-      setTasks(newTaskList);
+      // setTasks(newTaskList);
   
-      saveTasksToLocalStorage(newTaskList);
+      updateStorage(taskToAdd);
     }
   
     function deleteTaskEdit(taskId) {
@@ -41,59 +41,34 @@ function Edit(){
   
       fetch(`http://localhost:3000/tasks/${taskId}`, requestOptions)
         .then(response => response.json());
-  
-     
-  
-  
+   
       let filteredTasks = tasks.filter((task) => {
         return task.id !== taskId;
       });
-  
-     // setTasks(filteredTasks);
-  
+     // setTasks(filteredTasks);  
      // saveTasksToLocalStorage(filteredTasks);
     }
   
-      function saveTasksToLocalStorage(tasks) {
-        
-        localStorage.setItem("tasks", '');
+      function updateStorage(tasks) {
+       
+       localStorage.setItem("tasks", '');
+       localStorage.setItem("tasks", JSON.stringify(tasks));
   
-        console.log('yahan check kero tasks', tasks[0].orderCode)
-  
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-  
-        //tasks = JSON.stringify(tasks[0]);
-        
         const requestOption = {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' }
-        };
-  
-  
-        
-        const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(tasks[0])
+          body: JSON.stringify(tasks)
         };
   
   
-        fetch(`http://localhost:3000/tasks/${tasks[0].orderCode}`, requestOption)
+        fetch(`http://localhost:3000/tasks/`, requestOption)
           .then(response => response.json())
-          .then( fetch(`http://localhost:3000/tasks`, requestOptions)
-                 .then(response => response.json()));  
-  
-             //    console.log('yahan check kero tasks2222222', tasks[0])
-      
-  
-  
-    }
+        }
   
   
   
   
-    async function loadTasksFromLocalStorage() {
-      
+    async function loadTasksFromLocalStorage() {      
        const response = await fetch("http://localhost:3000/tasks");
        const json = await response.json();
        console.log('json edit', json);
@@ -102,7 +77,7 @@ function Edit(){
   
        Arr.push(json);
   
-       apiResponseData(json);
+       //apiResponseData(json);
       
        //console.log('Api Data array', Arr);
   
@@ -219,7 +194,7 @@ function Edit(){
           <section>
             <StatusLineEdit
               tasks={tasks}
-              addTask={addTaskEdit}
+              updateTask={updateTask}
               deleteTaskEdit={deleteTaskEdit}
               status="Edit Task"
             />

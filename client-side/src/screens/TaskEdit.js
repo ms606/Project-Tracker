@@ -4,7 +4,7 @@ import StatusLineDetailEdit from "../components/StatusLineDetailEdit";
 
 
 export default function Task(props) {
-  const { addTask, deleteTaskEdit, task } = props;
+  const { updateTask, deleteTaskEdit, task } = props;
   
   const [tasks, setTasks] = useState([]);
   const [taskDetail, setTaskDetail] = useState([]);
@@ -36,7 +36,7 @@ export default function Task(props) {
         setCollapsed(false);
       } else {
         let newTask = {
-          id: 1,
+        //  id: newTaskId,
           orderCode:  event.target.elements.orderCode.value,
           machineDet: event.target.elements.machineDet.value,
           activity:   event.target.elements.activity.value,
@@ -49,7 +49,7 @@ export default function Task(props) {
           };
         //console.log(event);
 
-        addTask(newTask);
+        updateTask(newTask);
           setCollapsed(true);
       }
     }
