@@ -53,19 +53,16 @@ function Edit(){
        
        localStorage.setItem("tasks", '');
        localStorage.setItem("tasks", JSON.stringify(tasks));
-  
+
         const requestOption = {
-          method: 'POST',
+          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(tasks)
         };
   
-  
-        fetch(`http://localhost:3000/tasks/`, requestOption)
+        fetch(`http://localhost:3000/tasks/${tasks.id}`, requestOption)
           .then(response => response.json())
         }
-  
-  
   
   
     async function loadTasksFromLocalStorage() {      
@@ -197,9 +194,7 @@ function Edit(){
               updateTask={updateTask}
               deleteTaskEdit={deleteTaskEdit}
               status="Edit Task"
-            />
-  
-          
+            />          
           </section>
         </main>
       </div>

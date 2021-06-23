@@ -35,21 +35,21 @@ export default function Task(props) {
       if (collapsed) {
         setCollapsed(false);
       } else {
+
         let newTask = {
-        //  id: newTaskId,
+          id: tasks.id,
           orderCode:  event.target.elements.orderCode.value,
           machineDet: event.target.elements.machineDet.value,
           activity:   event.target.elements.activity.value,
           customer:   event.target.elements.customer.value,
           urgency: urgencyLevel,
-          status: 'Create task',
+          status: 'Update Task',
           collapsed: true,
           expectedShipping: event.target.elements.expectedShipping.value,
           shipping: event.target.elements.shipping.value,
           };
-        //console.log(event);
-
-        updateTask(newTask);
+        
+          updateTask(newTask);
           setCollapsed(true);
       }
     }
@@ -80,12 +80,11 @@ function addEmptyTaskDetail(status) {
     newTaskId = lastTask + 1;
   }
 
-  console.log('what is newTaskId ', newTaskId)
+  console.log('what is taskDetail ', taskDetail)
 
   setTaskDetail((taskDetail) => [
     ...taskDetail,
     {
-      id: newTaskId,
       NoOfResource: "",
       hour: "",
       duration: "",
