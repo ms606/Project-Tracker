@@ -86,6 +86,7 @@ function addEmptyTaskDetail(status) {
     ...taskDetail,
     {
       NoOfResource: "",
+      resource: "",
       hour: "",
       duration: "",
       department: "",

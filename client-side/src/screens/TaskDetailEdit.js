@@ -29,22 +29,11 @@ export default function TaskDetailEdit (props) {
 
 
     function saveTaskDetailEditToLocalStorage(tasks) {
+      
       localStorage.setItem("taskDetail", JSON.stringify(tasks));
   
-      //const orderCode = tasks[tasks.length-1].orderCode;
-  
-      //tasks = tasks[tasks.length - 1];
-      //if ((tasks[tasks.length-1]) > 0 ){
-        //tasks = JSON.stringify(tasks[tasks.length-1]);
-        //console.log('JSON.stringify', JSON.stringify(tasks[tasks.length-1]));
-      //}
-      //else {
-        tasks = JSON.stringify(tasks);
-       // console.log('JSON.stringify', JSON.stringify(tasks));
-      //}
-  
-      //tasks = tasks.substring(1, tasks.length-1);
-  
+      tasks = JSON.stringify(tasks);
+      
       const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -55,6 +44,21 @@ export default function TaskDetailEdit (props) {
        .then(response => response.json());    
     }
 
+    function updateTaskDetailEdit(tasks) {
+      
+      localStorage.setItem("taskDetail", JSON.stringify(tasks));
+  
+      tasks = JSON.stringify(tasks);
+      
+      const requestOptions = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: tasks
+      };
+  
+      fetch(`http://localhost:3000/taskDetail/${taskOrderCode}`, requestOptions)
+       .then(response => response.json());    
+    }
     
     function deleteTaskDetailEdit(autoId) {
 
@@ -92,6 +96,8 @@ export default function TaskDetailEdit (props) {
             department: event.target.elements.department.value,
             autoId: taskDetail.autoId
         };
+
+        console.log(!!newTaskDetail.autoId);
     
         addTaskDetailEdit(newTaskDetail);
         setCollapsed(true);
