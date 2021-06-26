@@ -88,6 +88,20 @@ TaskDetail.remove = function(task, result){
 };
 
 
+TaskDetail.updateById = function(id, task, result){
+    sql.query("UPDATE tasks SET department = ? ,  resource = ?, duration = ?, hour = ? , NoOfResource = ? , orderCode = ?  WHERE autoId = ?", 
+                [task.activity, task.urgency, task.machineDet, task.expectedShipping, task.Shipping, task.orderCode, task.status, id], function (err, res) {
+          if(err) {
+              console.log("error: ", err);
+                result(null, err);
+             }
+           else{   
+             result(null, res);
+                }
+            }); 
+};
+
+
 TaskDetail.getTaskEverythingById = function (taskId, result) {
   sql.query(`select orderCode, customer, machineDet, activity, department, resource, urgency, 
    DATE_FORMAT(expectedShipping, '%d/%m/%Y') expectedShipping , 
