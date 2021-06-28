@@ -15,6 +15,7 @@ module.exports = function(app) {
   app.route('/taskDetail/:taskId')  
     .get(todoList.list_all_task_details)  
     .post(todoList.create_a_task_details)
+    .put(todoList.update_a_task_detail)
     .delete(todoList.delete_a_task_detail)
 
   app.route('/taskDetailTask/:taskId')  

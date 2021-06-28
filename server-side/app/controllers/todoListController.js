@@ -7,10 +7,10 @@ var NewTask = require('../model/appModelDetail.js');
 exports.list_all_tasks = function(req, res) {
   Task.getAllTask(function(err, task) {
 
-    console.log('controller')
+    //console.log('controller')
     if (err)
       res.send(err);
-      console.log('res', task);
+    //  console.log('res', task);
     res.send(task);
   });
 };
@@ -18,10 +18,10 @@ exports.list_all_tasks = function(req, res) {
 exports.list_all_task_details = function(req, res) {
   NewTask.getAllTaskDetail(function(err, task) {
 
-    console.log('controller')
+    //console.log('controller')
     if (err)
       res.send(err);
-      console.log('res', task);
+  //    console.log('res', task);
     res.send(task);
   });
 };
@@ -100,12 +100,19 @@ exports.update_a_task = function(req, res) {
   });
 };
 
+exports.update_a_task_detail = function(req, res) {
+  NewTask.updateById(req.params.taskId, new NewTask(req.body), function(err, task) {
+    //if (err){res.send(err)}      
+    //res.send(res)
+    //res.json(task);
+    res.send(res.status);
+  });
+};
 
 exports.delete_a_task = function(req, res) {
   Task.remove( req.params.taskId, function(err, task) {
-    if (err)
-      res.send(err);
-    res.json({ message: 'Task successfully deleted' });
+    if (err) res.send(err)
+    res.send({message: 'Task successfully deleted'});
   });
 };
 
@@ -114,6 +121,6 @@ exports.delete_a_task_detail = function(req, res) {
   NewTask.remove( req.params.taskId, function(err, task) {
     if (err)
       res.send(err);
-    res.json({ message: 'Task successfully deleted' });
+    res.json({message: 'Task successfully deleted'});
   });
 };

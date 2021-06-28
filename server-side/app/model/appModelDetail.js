@@ -17,16 +17,6 @@ var TaskDetail = function(taskDetail){
 
 TaskDetail.createTaskDetail = function (newTask, result) { 
         
-        if (!!newTask.autoId) {
-            console.log('andar agaya');
-            console.log(newTask);
-           
-            sql.query("DELETE FROM task_detail WHERE autoId = (?)", [newTask.autoId],function(err1,res1){
-                null;
-            });            
-        };
-     
-    
         sql.query("INSERT INTO task_detail set ?", newTask, function (err, res) {
                 
                 if(err) {
@@ -62,7 +52,7 @@ TaskDetail.getAllTaskDetail = function (result) {
                     result(null, err);
                 }
                 else{
-                  console.log('tasks : ', res);  
+                  //console.log('tasks : ', res);  
 
                  result(null, res);
                 }
@@ -70,35 +60,31 @@ TaskDetail.getAllTaskDetail = function (result) {
 };
 
 TaskDetail.remove = function(task, result){
-
-     //task = JSON.parse(task);
-
-    console.log(task);
      sql.query("DELETE FROM task_detail WHERE autoId in (?)", [task], function (err, res) {
-
                 if(err) {
-                    console.log("error: ", err);
-                    result(null, err);
+                  console.log("error: ", err);
+                  result(null, err);
                 }
-                else{
-               
-                 result(null, res);
+                else{               
+                  result(null, res);
                 }
             }); 
 };
 
 
-TaskDetail.updateById = function(id, task, result){
-    sql.query("UPDATE tasks SET department = ? ,  resource = ?, duration = ?, hour = ? , NoOfResource = ? , orderCode = ?  WHERE autoId = ?", 
-                [task.activity, task.urgency, task.machineDet, task.expectedShipping, task.Shipping, task.orderCode, task.status, id], function (err, res) {
+TaskDetail.updateById = function(id, taskDetail, result){
+    //console.log('we here id:', id, ' task: ',  taskDetail)
+    sql.query("UPDATE task_detail SET department = ? ,  resource = ?, duration = ?, hour = ? , NoOfResource = ? , orderCode = ?  WHERE autoId = ?", 
+        [taskDetail.department, taskDetail.resource, taskDetail.duration, taskDetail.hour, taskDetail.NoOfResource, taskDetail.orderCode,  id], 
+        function (err, res) {
           if(err) {
-              console.log("error: ", err);
-                result(null, err);
-             }
-           else{   
-             result(null, res);
-                }
-            }); 
+            //console.log("error: ", err);
+            result(null, err);
+          } else {               
+              //console.log(res)
+            result(null, res.status);
+          }
+        }); 
 };
 
 

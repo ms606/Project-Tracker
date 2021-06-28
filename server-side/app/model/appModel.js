@@ -62,14 +62,10 @@ Task.getAllTask = function (result) {
 };
 
 Task.updateById = function(id, task, result){
-    console.log('idher hoon',id, task)
-
-
-  sql.query("UPDATE tasks SET activity = ? ,  urgency = ?, machineDet = ? , expectedShipping = ? , Shipping = ? , orderCode = ?,  status_new = ? WHERE id = ?", 
-                [task.activity, task.urgency, task.machineDet, task.expectedShipping, task.Shipping, task.orderCode, task.status, id], function (err, res) {
-          if(err) {
-              console.log("error: ", err);
-                result(null, err);
+    sql.query("UPDATE tasks SET activity = ? ,  urgency = ?, machineDet = ? , expectedShipping = ? , Shipping = ? , orderCode = ?,  status_new = ? WHERE id = ?", 
+       [task.activity, task.urgency, task.machineDet, task.expectedShipping, task.Shipping, task.orderCode, task.status, id], function (err, res) {
+          if(err) {            
+             result(null, err);
              }
            else{   
              result(null, res);
@@ -78,9 +74,7 @@ Task.updateById = function(id, task, result){
 };
 
 Task.remove = function(id, result){
-     console.log('aaa');
-     console.log(id);
-     sql.query("DELETE FROM tasks WHERE orderCode in (?)", [id], function (err, res) {
+    sql.query("DELETE FROM tasks WHERE orderCode in (?)", [id], function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
