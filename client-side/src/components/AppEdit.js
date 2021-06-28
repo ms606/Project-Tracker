@@ -32,7 +32,7 @@ function Edit(){
   
     function deleteTaskEdit(taskId) {
   
-      console.log('deletion wala taskdetail',taskId);
+      //console.log('deletion wala taskdetail',taskId);
   
       const requestOptions = {
         method: 'DELETE',
@@ -68,7 +68,7 @@ function Edit(){
     async function loadTasksFromLocalStorage() {      
        const response = await fetch("http://localhost:3000/tasks");
        const json = await response.json();
-       console.log('json edit', json);
+       //console.log('json edit', json);
   
        const Arr = [];
   

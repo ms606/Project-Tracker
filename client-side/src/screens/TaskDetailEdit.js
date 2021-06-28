@@ -4,7 +4,7 @@ import "../styles/taskDetailEdit.scss";
 export default function TaskDetailEdit (props) {
     const { taskDetail, taskOrderCode } = props;
     
-    console.log('Add task detail', taskDetail);
+    //console.log('Add task detail', taskDetail);
     
     const [collapsed,  setCollapsed ] = useState(true);
     const [formAction, setFormAction] = useState("");
@@ -45,24 +45,30 @@ export default function TaskDetailEdit (props) {
     }
 
     function updateTaskDetailEdit(tasks) {
-      
+      console.log('updateTaskDetailEdit',tasks)
       localStorage.setItem("taskDetail", JSON.stringify(tasks));
   
-      tasks = JSON.stringify(tasks);
+      //tasks = JSON.stringify(tasks);
       
       const requestOptions = {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: tasks
+        body: JSON.stringify(tasks)
       };
   
-      fetch(`http://localhost:3000/taskDetail/${taskOrderCode}`, requestOptions)
-       .then(response => response.json());    
+      fetch(`http://localhost:3000/taskDetail/${tasks.autoId}`, requestOptions)
+       .then(response => {
+          //response.json()
+            console.log(response)
+          }
+       );   
+       
+      
     }
     
     function deleteTaskDetailEdit(autoId) {
 
-      console.log('deletion wala taskdetail',autoId);
+     // console.log('deletion wala taskdetail',autoId);
   
       const requestOptions = {
         method: 'DELETE',
@@ -97,9 +103,14 @@ export default function TaskDetailEdit (props) {
             autoId: taskDetail.autoId
         };
 
-        console.log(!!newTaskDetail.autoId);
-    
-        addTaskDetailEdit(newTaskDetail);
+        console.log(newTaskDetail.autoId);
+        
+        if (newTaskDetail.autoId === null){
+          addTaskDetailEdit(newTaskDetail);
+        } else {
+          updateTaskDetailEdit(newTaskDetail)
+        }
+       
         setCollapsed(true);
         }
       }
